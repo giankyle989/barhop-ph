@@ -5,13 +5,14 @@ Philippine bar & club listings web app. Centralized directory for discovering ba
 ## Project Status
 
 **Phase:** MVP Complete — All 7 plans done
+**Live URL:** https://barhop-ph.vercel.app
 
 ## Key Documents
 
 - **PRD:** `docs/PRD.md`
 - **Design Spec:** `docs/superpowers/specs/2026-03-19-prd-review-design.md` (overrides PRD where they conflict)
 - **Master Plan:** `docs/superpowers/plans/2026-03-19-master-plan.md`
-- **Current Plan:** `docs/superpowers/plans/2026-03-19-plan-1-foundation.md`
+- **All Plans:** Complete (Plans 1-7 in `docs/superpowers/plans/`)
 - **Wireframes:** `docs/wireframes-customer.html`, `docs/wireframes-admin.html`
 
 ## Tech Stack
