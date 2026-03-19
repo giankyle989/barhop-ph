@@ -9,8 +9,8 @@ import { REGIONS, CATEGORIES, getCategoryBySlug, getRegionBySlug } from "@/lib/c
 // ---------------------------------------------------------------------------
 
 const VALID_REGION_SLUGS = REGIONS.map((r) => r.slug) as [string, ...string[]];
-// Collect every city slug across all regions
-const ALL_CITY_SLUGS = REGIONS.flatMap((r) => r.cities.map((c) => c.slug)) as [
+// Collect every unique city slug across all regions (some slugs appear in multiple regions)
+const ALL_CITY_SLUGS = [...new Set(REGIONS.flatMap((r) => r.cities.map((c) => c.slug)))] as [
   string,
   ...string[],
 ];
@@ -324,6 +324,11 @@ export async function GET(request: NextRequest) {
       tags: string[];
     };
 
+    const categoryFilter =
+      categoryNames.length > 0
+        ? Prisma.sql`AND categories && ${categoryNames}::text[]`
+        : Prisma.empty;
+
     const rows = await db.$queryRaw<BrowseRow[]>`
       SELECT id, name, slug, categories, region, city, image_url AS "imageUrl",
              is_promoted AS "isPromoted", open_hours AS "openHours", tags
@@ -331,6 +336,7 @@ export async function GET(request: NextRequest) {
       WHERE status = 'published'
         ${region ? Prisma.sql`AND region = ${region}` : Prisma.empty}
         ${city ? Prisma.sql`AND city = ${city}` : Prisma.empty}
+        ${categoryFilter}
         AND open_hours->>${phtDay} IS NOT NULL
         AND open_hours->${phtDay}->>'open' IS NOT NULL
       ORDER BY is_promoted DESC, updated_at DESC
@@ -342,6 +348,7 @@ export async function GET(request: NextRequest) {
       WHERE status = 'published'
         ${region ? Prisma.sql`AND region = ${region}` : Prisma.empty}
         ${city ? Prisma.sql`AND city = ${city}` : Prisma.empty}
+        ${categoryFilter}
         AND open_hours->>${phtDay} IS NOT NULL
         AND open_hours->${phtDay}->>'open' IS NOT NULL
     `;
