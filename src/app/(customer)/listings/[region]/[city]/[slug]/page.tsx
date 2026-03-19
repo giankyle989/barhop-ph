@@ -2,22 +2,37 @@ import { cache } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import sanitizeHtml from "sanitize-html";
 import { db } from "@/lib/db";
 import { getCityBySlug, getRegionBySlug } from "@/lib/constants";
 import { getPrimaryCategory } from "@/lib/listing-helpers";
 import { generateListingJsonLd } from "@/lib/structured-data";
 import { canonicalUrl, siteUrl } from "@/lib/seo";
-import { Badge } from "@/components/ui";
+import { Badge, Skeleton } from "@/components/ui";
 import { Breadcrumbs } from "@/components/customer/breadcrumbs";
 import { OpenClosedBadge } from "@/components/customer/open-closed-badge";
-import { ListingGallery } from "@/components/customer/listing-gallery";
-import { ListingMap } from "@/components/customer/listing-map";
 import { ListingHours } from "@/components/customer/listing-hours";
 import { ListingMenu } from "@/components/customer/listing-menu";
 import { ListingEvents } from "@/components/customer/listing-events";
 import { ListingContact } from "@/components/customer/listing-contact";
 import type { OpenHours, SocialLinks, MenuItem, EventItem } from "@/lib/validations";
+
+// Lazy-load heavy below-fold client components to reduce initial bundle size.
+// ListingGallery: lightbox with keyboard nav — defer until it scrolls into view.
+const ListingGallery = dynamic(
+  () => import("@/components/customer/listing-gallery").then((m) => ({ default: m.ListingGallery })),
+  { loading: () => <Skeleton className="h-[200px] w-full" /> }
+);
+
+// ListingMap: Google Maps iframe — skip SSR (no benefit, only client-side).
+const ListingMap = dynamic(
+  () => import("@/components/customer/listing-map").then((m) => ({ default: m.ListingMap })),
+  {
+    loading: () => <Skeleton className="h-[300px] w-full" />,
+    ssr: false,
+  }
+);
 
 export const revalidate = 60;
 

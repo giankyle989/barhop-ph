@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { Breadcrumbs } from "@/components/customer/breadcrumbs";
-import { NearbyClient } from "@/components/customer/nearby-client";
 import { canonicalUrl } from "@/lib/seo";
+
+// NearbyClient uses browser geolocation — skip SSR entirely.
+const NearbyClient = dynamic(
+  () => import("@/components/customer/nearby-client").then((m) => ({ default: m.NearbyClient })),
+  { ssr: false }
+);
 
 export const metadata: Metadata = {
   title: "Bars & Clubs Near Me",
