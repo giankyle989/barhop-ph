@@ -82,7 +82,7 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-neon-purple/20 via-surface to-surface py-24 sm:py-32">
+      <section className="relative overflow-x-hidden bg-gradient-to-b from-neon-purple/20 via-surface to-surface py-24 sm:py-32">
         {/* Decorative background glow */}
         <div
           className="pointer-events-none absolute inset-0 flex items-start justify-center"
