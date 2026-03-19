@@ -11,13 +11,13 @@
 
 | # | Plan | Phase | Dependencies | Status |
 |---|---|---|---|---|
-| 1 | [Foundation](./2026-03-19-plan-1-foundation.md) | Phase 1 | None | Pending |
-| 2 | Admin CRUD & Image Upload | Phase 2 | Plan 1 | Pending |
-| 3 | Customer UI & Search | Phase 3 | Plan 2 | Pending |
-| 4 | SEO & Performance | Phase 4 | Plan 3 | Pending |
-| 5 | Data Seeding | Phase 5 | Plan 4 | Pending |
-| 6 | Promoted Listings & Analytics | Phase 6-7 | Plan 5 | Pending |
-| 7 | Polish & Launch | Phase 8 | Plan 6 | Pending |
+| 1 | [Foundation](./2026-03-19-plan-1-foundation.md) | Phase 1 | None | Done |
+| 2 | [Admin CRUD & Image Upload](./2026-03-19-plan-2-admin-crud.md) | Phase 2 | Plan 1 | Done |
+| 3 | [Customer UI & Search](./2026-03-19-plan-3-customer-ui.md) | Phase 3 | Plan 2 | Pending |
+| 4 | [SEO & Performance](./2026-03-19-plan-4-seo-performance.md) | Phase 4 | Plan 3 | Pending |
+| 5 | [Data Seeding](./2026-03-19-plan-5-data-seeding.md) | Phase 5 | Plan 4 | Pending |
+| 6 | [Promoted Listings & Analytics](./2026-03-19-plan-6-promoted-analytics.md) | Phase 6-7 | Plan 5 | Pending |
+| 7 | [Polish & Launch](./2026-03-19-plan-7-polish-launch.md) | Phase 8 | Plan 6 | Pending |
 
 ## Design System
 
@@ -35,4 +35,4 @@ The UI/UX design system (dark nightlife theme, component specs, wireframes) is e
 
 ## Execution Strategy
 
-Each plan is written just before execution starts. This avoids stale plans and allows learnings from earlier phases to inform later ones. Only Plan 1 is fully detailed now.
+All plans are now fully detailed and ready for execution.
