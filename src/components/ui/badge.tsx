@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 type BadgeVariant = "default" | "open" | "closed" | "featured" | "neon";
 
-interface BadgeProps {
+export interface BadgeProps {
   variant?: BadgeVariant;
   children: ReactNode;
   className?: string;
