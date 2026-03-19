@@ -1,0 +1,80 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters", "postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis]
+}
+
+enum Role {
+  super_admin
+  admin
+}
+
+enum ListingStatus {
+  draft
+  published
+  archived
+}
+
+model User {
+  id                 String    @id @default(cuid())
+  email              String    @unique
+  passwordHash       String    @map("password_hash")
+  role               Role
+  name               String
+  failedLoginCount   Int       @default(0) @map("failed_login_count")
+  lastFailedLoginAt  DateTime? @map("last_failed_login_at")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+
+  ownedListings      Listing[] @relation("ListingOwner")
+  updatedListings    Listing[] @relation("ListingUpdater")
+
+  @@map("users")
+}
+
+model Listing {
+  id             String        @id @default(cuid())
+  name           String
+  slug           String
+  categories     String[]
+  region         String
+  city           String
+  address        String
+  latitude       Float
+  longitude      Float
+  description    String?       @db.Text
+  imageUrl       String?       @map("image_url")
+  gallery        String[]      @default([])
+  tags           String[]      @default([])
+  openHours      Json?         @map("open_hours")
+  menu           Json?
+  events         Json?
+  isPromoted     Boolean       @default(false) @map("is_promoted")
+  status         ListingStatus @default(draft)
+  videoUrl       String?       @map("video_url")
+  socialLinks    Json?         @map("social_links")
+  phone          String?
+  whatsapp       String?
+  email          String?
+  googlePlaceId  String?       @unique @map("google_place_id")
+
+  ownerId        String?       @map("owner_id")
+  owner          User?         @relation("ListingOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+
+  updatedById    String?       @map("updated_by")
+  updatedBy      User?         @relation("ListingUpdater", fields: [updatedById], references: [id], onDelete: SetNull)
+
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+
+  @@unique([city, slug])
+  @@index([status])
+  @@index([region, city])
+  @@index([isPromoted])
+  @@map("listings")
+}
