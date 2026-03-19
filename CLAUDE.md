@@ -4,7 +4,7 @@ Philippine bar & club listings web app. Centralized directory for discovering ba
 
 ## Project Status
 
-**Phase:** Plan 5 — Data Seeding (complete — 200 listings seeded)
+**Phase:** Plan 6 — Promoted Listings & Analytics (complete)
 
 ## Key Documents
 
