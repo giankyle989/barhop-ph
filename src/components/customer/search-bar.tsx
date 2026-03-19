@@ -185,7 +185,7 @@ export function SearchBar({
       {mode === "autocomplete" && showSuggestions && (
         <div
           role="listbox"
-          className="absolute top-full left-0 right-0 z-50 mt-1 rounded-card bg-surface-card border border-border shadow-card overflow-hidden"
+          className="absolute top-full left-0 right-0 z-50 mt-1 bg-surface-card border border-border shadow-card overflow-hidden"
         >
           {loading && suggestions.length === 0 && (
             <div className="px-4 py-3 text-sm text-content-muted">Searching...</div>
