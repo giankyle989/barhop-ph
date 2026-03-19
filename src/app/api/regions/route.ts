@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
   }
 
   const regionsWithCounts = REGIONS.map((region) => {
-    const regionCounts = countMap[region.name] ?? {};
+    const regionCounts = countMap[region.slug] ?? {};
     const regionTotal = Object.values(regionCounts).reduce((sum, n) => sum + n, 0);
 
     return {
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
       listingCount: regionTotal,
       cities: region.cities.map((city) => ({
         ...city,
-        listingCount: regionCounts[city.name] ?? 0,
+        listingCount: regionCounts[city.slug] ?? 0,
       })),
     };
   });
