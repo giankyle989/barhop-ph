@@ -248,7 +248,7 @@ export function BrowseClient({ initialParams }: BrowseClientProps) {
       </div>
 
       {/* Body: sidebar + results */}
-      <div className="flex gap-8 items-start">
+      <div className="md:flex md:gap-8 md:items-start">
         {/* FilterSidebar handles both desktop static + mobile drawer */}
         <FilterSidebar />
 
