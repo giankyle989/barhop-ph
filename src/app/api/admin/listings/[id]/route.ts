@@ -14,6 +14,10 @@ function sanitizeDescription(raw: string): string {
   });
 }
 
+function stripHtml(value: string): string {
+  return value.replace(/<[^>]*>/g, "").trim();
+}
+
 // Fields that admins (non-super_admin) are not allowed to modify.
 // "slug" is intentionally absent — it is auto-generated and never accepted via the API,
 // so it cannot appear in parsed.data (updateListingSchema has no slug field).
@@ -97,10 +101,13 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     }
   }
 
-  // Sanitize description if present
-  if (data.description) {
-    data.description = sanitizeDescription(data.description);
-  }
+  // Sanitize text fields
+  if (data.description) data.description = sanitizeDescription(data.description);
+  if (data.name) data.name = stripHtml(data.name);
+  if (data.address) data.address = stripHtml(data.address);
+  if (data.phone) data.phone = stripHtml(data.phone);
+  if (data.whatsapp) data.whatsapp = stripHtml(data.whatsapp);
+  if (data.email) data.email = stripHtml(data.email);
 
   const updated = await db.listing.update({
     where: { id },

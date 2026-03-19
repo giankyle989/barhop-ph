@@ -16,6 +16,11 @@ function sanitizeDescription(raw: string): string {
   });
 }
 
+/** Strip all HTML tags from plain text fields (name, address, phone, etc.) */
+function stripHtml(value: string): string {
+  return value.replace(/<[^>]*>/g, "").trim();
+}
+
 /**
  * Resolve a unique slug for a given city. Tries `base`, then `base-2`, `base-3`, …
  */
@@ -117,7 +122,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { name, city, description, ...rest } = parsed.data;
+  const { name, city, description, address, phone, whatsapp, email, ...rest } = parsed.data;
 
   // If ownerId was supplied, verify the referenced user exists and is an admin role
   if (ownerId) {
@@ -127,17 +132,24 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  const baseSlug = generateSlug(name);
+  // Strip HTML from plain text fields
+  const cleanName = stripHtml(name);
+  const cleanAddress = stripHtml(address);
+  const baseSlug = generateSlug(cleanName);
   const slug = await resolveUniqueSlug(city, baseSlug);
 
   const cleanDescription = description ? sanitizeDescription(description) : undefined;
 
   const listing = await db.listing.create({
     data: {
-      name,
+      name: cleanName,
       slug,
       city,
+      address: cleanAddress,
       description: cleanDescription,
+      phone: phone ? stripHtml(phone) : undefined,
+      whatsapp: whatsapp ? stripHtml(whatsapp) : undefined,
+      email: email ? stripHtml(email) : undefined,
       ...rest,
       ownerId: ownerId ?? null,
       updatedById: session.userId,
