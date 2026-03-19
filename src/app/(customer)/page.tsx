@@ -7,6 +7,7 @@ import { listingToCardData } from "@/lib/listing-helpers";
 import { ListingCard } from "@/components/customer/listing-card";
 import { SearchBar } from "@/components/customer/search-bar";
 import { CATEGORIES } from "@/lib/constants";
+import { canonicalUrl } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -14,11 +15,17 @@ export const metadata: Metadata = {
   title: "BarHop PH — Discover Bars & Clubs in the Philippines",
   description:
     "The Philippines' #1 directory for bars, clubs, and nightlife venues. Search by location, category, and hours. Find the best spots in Makati, BGC, Cebu, and more.",
+  alternates: {
+    canonical: canonicalUrl("/"),
+  },
   openGraph: {
     title: "BarHop PH — Discover Bars & Clubs in the Philippines",
     description:
       "The Philippines' #1 directory for bars, clubs, and nightlife venues.",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
   },
 };
 

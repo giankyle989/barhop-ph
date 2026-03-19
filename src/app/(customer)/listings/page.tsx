@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Breadcrumbs } from "@/components/customer/breadcrumbs";
 import { BrowseClient } from "./browse-client";
+import { canonicalUrl } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -9,6 +10,12 @@ export const metadata: Metadata = {
   title: "Browse Bars & Clubs",
   description:
     "Browse all bars, clubs, and nightlife venues in the Philippines. Filter by region, city, category, and hours.",
+  alternates: {
+    canonical: canonicalUrl("/listings"),
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default async function BrowsePage({

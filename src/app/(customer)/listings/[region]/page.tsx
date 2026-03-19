@@ -7,6 +7,7 @@ import { listingToCardData } from "@/lib/listing-helpers";
 import { ListingCard } from "@/components/customer/listing-card";
 import { Breadcrumbs } from "@/components/customer/breadcrumbs";
 import { Badge } from "@/components/ui";
+import { canonicalUrl } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -25,6 +26,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `Bars & Clubs in ${region.displayName}`,
     description: `Discover the best bars, clubs, and nightlife venues in ${region.displayName}, Philippines. Browse by city, category, and hours.`,
+    alternates: {
+      canonical: canonicalUrl(`/listings/${regionSlug}`),
+    },
+    twitter: {
+      card: "summary_large_image",
+    },
   };
 }
 

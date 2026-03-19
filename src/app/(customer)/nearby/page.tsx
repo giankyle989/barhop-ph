@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/customer/breadcrumbs";
 import { NearbyClient } from "@/components/customer/nearby-client";
+import { canonicalUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Bars & Clubs Near Me",
   description:
     "Find bars, clubs, and nightlife venues near your current location in the Philippines.",
+  alternates: {
+    canonical: canonicalUrl("/nearby"),
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function NearbyPage() {

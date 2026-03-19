@@ -7,6 +7,7 @@ import { db } from "@/lib/db";
 import { getCityBySlug, getRegionBySlug } from "@/lib/constants";
 import { getPrimaryCategory } from "@/lib/listing-helpers";
 import { generateListingJsonLd } from "@/lib/structured-data";
+import { canonicalUrl, siteUrl } from "@/lib/seo";
 import { Badge } from "@/components/ui";
 import { Breadcrumbs } from "@/components/customer/breadcrumbs";
 import { OpenClosedBadge } from "@/components/customer/open-closed-badge";
@@ -19,8 +20,6 @@ import { ListingContact } from "@/components/customer/listing-contact";
 import type { OpenHours, SocialLinks, MenuItem, EventItem } from "@/lib/validations";
 
 export const revalidate = 60;
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://barhop.ph";
 
 // cache() deduplicates DB calls between generateMetadata and the page component
 // within the same render pass.
@@ -51,11 +50,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
+    alternates: {
+      canonical: canonicalUrl(`/listings/${region}/${city}/${slug}`),
+    },
     openGraph: {
       title,
       description,
       type: "website",
       images: listing.imageUrl ? [listing.imageUrl] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
     },
   };
 }
@@ -104,7 +109,7 @@ export default async function ListingDetailPage({ params }: Props) {
     ? sanitizeHtml(listing.description, SANITIZE_OPTIONS)
     : null;
 
-  const jsonLd = generateListingJsonLd(listing, SITE_URL);
+  const jsonLd = generateListingJsonLd(listing, siteUrl());
 
   return (
     <>

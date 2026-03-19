@@ -7,6 +7,7 @@ import { listingToCardData } from "@/lib/listing-helpers";
 import { ListingCard } from "@/components/customer/listing-card";
 import { Breadcrumbs } from "@/components/customer/breadcrumbs";
 import { Badge } from "@/components/ui";
+import { canonicalUrl } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -32,6 +33,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `Bars & Clubs in ${city.name}, ${region.displayName}`,
     description: `Find the best bars, clubs, and nightlife in ${city.name}. Browse venues with hours, menus, events, and more.`,
+    alternates: {
+      canonical: canonicalUrl(`/listings/${regionSlug}/${citySlug}`),
+    },
+    twitter: {
+      card: "summary_large_image",
+    },
   };
 }
 
