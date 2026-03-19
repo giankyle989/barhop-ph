@@ -207,17 +207,15 @@ export function SearchBar({
               href={buildListingUrl(item.region, item.city, item.slug)}
               role="option"
               onClick={() => setShowSuggestions(false)}
-              className="flex items-center gap-3 px-4 py-3 hover:bg-surface-overlay transition-colors"
+              className="block px-4 py-3 hover:bg-surface-overlay transition-colors text-center"
             >
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-content truncate">{item.name}</p>
-                <p className="text-xs text-content-muted flex items-center gap-1 mt-0.5">
-                  <MapPin size={10} aria-hidden="true" />
-                  {getCityDisplayName(item.city)}
-                  <span className="mx-1">·</span>
-                  {getPrimaryCategory(item.categories)}
-                </p>
-              </div>
+              <p className="text-sm font-medium text-content truncate">{item.name}</p>
+              <p className="text-xs text-content-muted inline-flex items-center gap-1 mt-0.5">
+                <MapPin size={10} aria-hidden="true" />
+                {getCityDisplayName(item.city)}
+                <span className="mx-1">·</span>
+                {getPrimaryCategory(item.categories)}
+              </p>
             </Link>
           ))}
           {suggestions.length > 0 && (
