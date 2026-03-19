@@ -305,9 +305,7 @@ async function processVenue(
     longitude: details.geometry.location.lng,
     description: null,
     imageUrl: imageUrls?.card ?? null,
-    gallery: imageUrls
-      ? [imageUrls.hero, imageUrls.original].filter(Boolean)
-      : [],
+    gallery: imageUrls?.original ? [imageUrls.original] : [],
     tags,
     openHours: openHours !== null
       ? (openHours as Prisma.InputJsonValue)

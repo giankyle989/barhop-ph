@@ -9,6 +9,7 @@ import { FeaturedBadge } from "./featured-badge";
 import {
   buildListingUrl,
   getPrimaryCategory,
+  getCityDisplayName,
   type ListingCardData,
 } from "@/lib/listing-helpers";
 
@@ -44,6 +45,7 @@ export function ListingCard({ listing, variant = "grid" }: ListingCardProps) {
 
   const href = buildListingUrl(region, city, slug);
   const primaryCategory = getPrimaryCategory(categories);
+  const cityName = getCityDisplayName(city);
   const distanceLabel =
     distance !== undefined ? `${distance.toFixed(1)} km` : null;
 
@@ -86,7 +88,7 @@ export function ListingCard({ listing, variant = "grid" }: ListingCardProps) {
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-content-secondary">
               <span className="flex items-center gap-1">
                 <MapPin size={12} className="shrink-0" aria-hidden="true" />
-                {city}
+                {cityName}
               </span>
               <span className="flex items-center gap-1">
                 <Clock size={12} className="shrink-0" aria-hidden="true" />
