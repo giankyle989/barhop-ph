@@ -48,14 +48,19 @@ export function FeaturedCarousel({ listings }: FeaturedCarouselProps) {
   }
 
   return (
-    <div className="relative">
-      {/* Left arrow — only rendered when scrollable */}
+    /*
+     * Outer wrapper provides padding room for the arrow buttons on sm+ screens.
+     * overflow-hidden prevents the carousel from bleeding into the page gutter.
+     * On mobile, the arrows are hidden (sm:flex) — users swipe naturally.
+     */
+    <div className="relative sm:px-6">
+      {/* Left arrow — desktop only, only rendered when scrollable */}
       <button
         onClick={() => scrollBy("left")}
         aria-label="Scroll left"
         aria-hidden={!canScrollLeft}
         tabIndex={canScrollLeft ? 0 : -1}
-        className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-surface-card border border-border shadow-card text-content-secondary hover:text-neon-purple hover:border-neon-purple/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-purple ${canScrollLeft ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        className={`hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 h-9 w-9 items-center justify-center rounded-full bg-surface-card border border-border shadow-card text-content-secondary hover:text-neon-purple hover:border-neon-purple/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-purple ${canScrollLeft ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
       >
         <ChevronLeft size={18} aria-hidden="true" />
       </button>
@@ -69,14 +74,14 @@ export function FeaturedCarousel({ listings }: FeaturedCarouselProps) {
         {listings.map((listing) => (
           /*
            * Card widths:
-           *  - mobile:  ~67% of container (1.5 cards visible = peek)
+           *  - mobile:  ~80% of container (peek at next card)
            *  - sm:      50% (2 cards)
            *  - lg:      ~33% (3 cards)
            * Gap is 1rem (gap-4), subtracted from each slot.
            */
           <div
             key={listing.id}
-            className="shrink-0 w-[calc(66.667%-0.667rem)] sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]"
+            className="shrink-0 w-[calc(80%-0.8rem)] sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]"
             style={{ scrollSnapAlign: "start" }}
           >
             <ListingCard listing={listing} variant="grid" />
@@ -84,13 +89,13 @@ export function FeaturedCarousel({ listings }: FeaturedCarouselProps) {
         ))}
       </div>
 
-      {/* Right arrow — only interactive when scrollable */}
+      {/* Right arrow — desktop only, only interactive when scrollable */}
       <button
         onClick={() => scrollBy("right")}
         aria-label="Scroll right"
         aria-hidden={!canScrollRight}
         tabIndex={canScrollRight ? 0 : -1}
-        className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-surface-card border border-border shadow-card text-content-secondary hover:text-neon-purple hover:border-neon-purple/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-purple ${canScrollRight ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        className={`hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 h-9 w-9 items-center justify-center rounded-full bg-surface-card border border-border shadow-card text-content-secondary hover:text-neon-purple hover:border-neon-purple/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-purple ${canScrollRight ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
       >
         <ChevronRight size={18} aria-hidden="true" />
       </button>

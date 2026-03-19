@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -11,9 +11,21 @@ interface ListingGalleryProps {
 
 export function ListingGallery({ images, alt }: ListingGalleryProps) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  // Track which thumbnail opened the lightbox so we can restore focus on close
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  const openLightbox = (index: number) => setLightboxIndex(index);
-  const closeLightbox = () => setLightboxIndex(null);
+  const openLightbox = (index: number, trigger: HTMLButtonElement) => {
+    triggerRef.current = trigger;
+    setLightboxIndex(index);
+  };
+
+  const closeLightbox = useCallback(() => {
+    setLightboxIndex(null);
+    // Return focus to the thumbnail that opened the lightbox
+    triggerRef.current?.focus();
+    triggerRef.current = null;
+  }, []);
 
   const showPrev = useCallback(() => {
     setLightboxIndex((prev) =>
@@ -27,7 +39,7 @@ export function ListingGallery({ images, alt }: ListingGalleryProps) {
     );
   }, [images.length]);
 
-  // Keyboard navigation
+  // Keyboard navigation and focus management
   useEffect(() => {
     if (lightboxIndex === null) return;
 
@@ -40,12 +52,14 @@ export function ListingGallery({ images, alt }: ListingGalleryProps) {
     document.addEventListener("keydown", handleKeyDown);
     // Prevent background scroll while lightbox is open
     document.body.style.overflow = "hidden";
+    // Move initial focus to the close button
+    closeButtonRef.current?.focus();
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
     };
-  }, [lightboxIndex, showPrev, showNext]);
+  }, [lightboxIndex, showPrev, showNext, closeLightbox]);
 
   if (!images || images.length === 0) return null;
 
@@ -61,7 +75,7 @@ export function ListingGallery({ images, alt }: ListingGalleryProps) {
           <button
             key={src}
             role="listitem"
-            onClick={() => openLightbox(index)}
+            onClick={(e) => openLightbox(index, e.currentTarget)}
             className="relative aspect-video overflow-hidden rounded-lg border border-border hover:border-border-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-purple transition-all group"
             aria-label={`View photo ${index + 1} of ${images.length}`}
           >
@@ -85,29 +99,30 @@ export function ListingGallery({ images, alt }: ListingGalleryProps) {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
           onClick={closeLightbox}
         >
-          {/* Close button */}
+          {/* Close button — min 44×44px touch target */}
           <button
+            ref={closeButtonRef}
             onClick={closeLightbox}
-            className="absolute top-4 right-4 z-10 p-2 rounded-full bg-surface-overlay text-content hover:bg-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-purple"
+            className="absolute top-3 right-3 z-10 p-3 rounded-full bg-surface-overlay text-content hover:bg-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-purple"
             aria-label="Close photo viewer"
           >
             <X size={20} aria-hidden="true" />
           </button>
 
-          {/* Prev button */}
+          {/* Prev button — min 44×44px touch target */}
           {images.length > 1 && (
             <button
               onClick={(e) => { e.stopPropagation(); showPrev(); }}
-              className="absolute left-4 z-10 p-2 rounded-full bg-surface-overlay text-content hover:bg-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-purple"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-surface-overlay text-content hover:bg-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-purple"
               aria-label="Previous photo"
             >
               <ChevronLeft size={24} aria-hidden="true" />
             </button>
           )}
 
-          {/* Image */}
+          {/* Image — mx-4 on mobile, mx-16 on sm+ to clear the nav buttons */}
           <div
-            className="relative w-full max-w-4xl max-h-[85vh] mx-16 aspect-video"
+            className="relative w-full max-w-4xl max-h-[85vh] mx-4 sm:mx-16 aspect-video"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
@@ -123,11 +138,11 @@ export function ListingGallery({ images, alt }: ListingGalleryProps) {
             </p>
           </div>
 
-          {/* Next button */}
+          {/* Next button — min 44×44px touch target */}
           {images.length > 1 && (
             <button
               onClick={(e) => { e.stopPropagation(); showNext(); }}
-              className="absolute right-4 z-10 p-2 rounded-full bg-surface-overlay text-content hover:bg-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-purple"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-surface-overlay text-content hover:bg-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-purple"
               aria-label="Next photo"
             >
               <ChevronRight size={24} aria-hidden="true" />

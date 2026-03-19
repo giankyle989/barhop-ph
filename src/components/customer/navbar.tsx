@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -20,6 +20,18 @@ export function Navbar() {
   const pathname = usePathname();
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
+
+  // Prevent background scroll while mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-surface/80 backdrop-blur-md">
@@ -49,10 +61,10 @@ export function Navbar() {
           ))}
         </nav>
 
-        {/* Mobile hamburger */}
+        {/* Mobile hamburger — min 44×44px touch target (p-3 = 12px padding + 22px icon = 46px) */}
         <button
           type="button"
-          className="flex items-center justify-center rounded-md p-2 text-content-secondary transition-colors hover:text-content sm:hidden"
+          className="flex items-center justify-center rounded-md p-3 text-content-secondary transition-colors hover:text-content sm:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-purple"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
           aria-controls="mobile-menu"

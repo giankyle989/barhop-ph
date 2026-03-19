@@ -112,7 +112,7 @@ export default async function HomePage() {
 
       {/* Featured Venues / Recently Added carousel */}
       {carouselCards.length > 0 && (
-        <section className="mx-auto w-full max-w-7xl px-4 py-16">
+        <section className="mx-auto w-full max-w-7xl px-4 py-16 overflow-hidden">
           <div className="mb-8 flex items-center justify-between">
             <h2 className="font-display text-display-sm font-semibold text-content">
               {carouselTitle}

@@ -78,8 +78,9 @@ export function ListingHours({ openHours }: ListingHoursProps) {
         <OpenClosedBadge openHours={openHours} />
       </div>
 
-      {/* Hours table */}
+      {/* Hours table — overflow-x-auto in case the container is very narrow */}
       {openHours ? (
+        <div className="overflow-x-auto">
         <table className="w-full text-sm" aria-label="Opening hours">
           <tbody>
             {DAYS_ORDER.map((day) => {
@@ -123,6 +124,7 @@ export function ListingHours({ openHours }: ListingHoursProps) {
             })}
           </tbody>
         </table>
+        </div>
       ) : (
         <p className="text-sm text-content-muted">Hours not available</p>
       )}
