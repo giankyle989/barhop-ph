@@ -29,7 +29,7 @@ export default async function AuthenticatedAdminLayout({
         pt-14 offsets the fixed mobile top bar (h-14).
         On md+ the top bar is hidden so the offset is removed.
       */}
-      <main className="flex-1 pt-14 md:pt-0 p-6 lg:p-8">
+      <main className="flex-1 min-w-0 overflow-x-hidden pt-14 md:pt-0 p-4 sm:p-6 lg:p-8">
         {children}
       </main>
     </div>
