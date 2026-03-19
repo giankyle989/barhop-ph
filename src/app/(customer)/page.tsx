@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { MapPin, ArrowRight } from "lucide-react";
 import { db } from "@/lib/db";
 import { listingToCardData } from "@/lib/listing-helpers";
-import { ListingCard } from "@/components/customer/listing-card";
 import { SearchBar } from "@/components/customer/search-bar";
+import { FeaturedCarousel } from "@/components/customer/featured-carousel";
 import { CATEGORIES } from "@/lib/constants";
 import { canonicalUrl } from "@/lib/seo";
 
@@ -59,15 +59,25 @@ const POPULAR_CITIES = [
 ];
 
 export default async function HomePage() {
-  const recentListings = await db.listing.findMany({
-    where: { status: "published" },
+  // Prefer promoted listings for the carousel; fall back to recent if none exist
+  const promotedListings = await db.listing.findMany({
+    where: { status: "published", isPromoted: true },
     orderBy: { updatedAt: "desc" },
     take: 8,
   });
 
-  const recentCards = recentListings.map((listing) =>
-    listingToCardData(listing)
-  );
+  const useFallback = promotedListings.length === 0;
+
+  const carouselListings = useFallback
+    ? await db.listing.findMany({
+        where: { status: "published" },
+        orderBy: { updatedAt: "desc" },
+        take: 8,
+      })
+    : promotedListings;
+
+  const carouselCards = carouselListings.map((listing) => listingToCardData(listing));
+  const carouselTitle = useFallback ? "Recently Added" : "Featured Venues";
 
   return (
     <div className="flex flex-col">
@@ -100,12 +110,12 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Recently Added */}
-      {recentCards.length > 0 && (
+      {/* Featured Venues / Recently Added carousel */}
+      {carouselCards.length > 0 && (
         <section className="mx-auto w-full max-w-7xl px-4 py-16">
           <div className="mb-8 flex items-center justify-between">
             <h2 className="font-display text-display-sm font-semibold text-content">
-              Recently Added
+              {carouselTitle}
             </h2>
             <Link
               href="/listings"
@@ -115,11 +125,7 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {recentCards.map((listing) => (
-              <ListingCard key={listing.id} listing={listing} variant="grid" />
-            ))}
-          </div>
+          <FeaturedCarousel listings={carouselCards} />
         </section>
       )}
 
