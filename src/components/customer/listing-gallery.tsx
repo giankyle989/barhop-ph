@@ -67,7 +67,7 @@ export function ListingGallery({ images, alt }: ListingGalleryProps) {
     <>
       {/* Thumbnail grid */}
       <div
-        className="grid grid-cols-2 sm:grid-cols-3 gap-2"
+        className={`grid gap-2 ${images.length === 1 ? "grid-cols-1 max-w-sm" : "grid-cols-2 sm:grid-cols-3"}`}
         role="list"
         aria-label="Venue photo gallery"
       >
@@ -83,7 +83,7 @@ export function ListingGallery({ images, alt }: ListingGalleryProps) {
               src={src}
               alt={`${alt} — photo ${index + 1}`}
               fill
-              sizes="(max-width: 640px) 50vw, 33vw"
+              sizes={images.length === 1 ? "(max-width: 640px) 100vw, 384px" : "(max-width: 640px) 50vw, 33vw"}
               className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
           </button>
