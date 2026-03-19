@@ -141,9 +141,9 @@ export default async function ListingDetailPage({ params }: Props) {
           <div className="relative mt-4 w-full aspect-[16/6] rounded-card overflow-hidden border border-border">
             <Image
               src={listing.imageUrl}
-              alt={`${listing.name} — hero photo`}
+              alt={`${listing.name} - ${getPrimaryCategory(listing.categories)} in ${cityObj?.name ?? city}`}
               fill
-              sizes="(max-width: 768px) 100vw, 1200px"
+              sizes="100vw"
               className="object-cover"
               priority
             />

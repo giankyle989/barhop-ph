@@ -107,15 +107,15 @@ export function ListingGallery({ images, alt }: ListingGalleryProps) {
 
           {/* Image */}
           <div
-            className="relative w-full max-w-4xl max-h-[85vh] mx-16"
+            className="relative w-full max-w-4xl max-h-[85vh] mx-16 aspect-video"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
               src={images[lightboxIndex] ?? ""}
-              alt={`${alt} — photo ${lightboxIndex + 1} of ${images.length}`}
-              width={1200}
-              height={800}
-              className="object-contain w-full h-full max-h-[85vh]"
+              alt={`${alt} photo ${lightboxIndex + 1}`}
+              fill
+              sizes="100vw"
+              className="object-contain"
               priority
             />
             <p className="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm text-content-secondary bg-black/60 px-3 py-1 rounded-full">

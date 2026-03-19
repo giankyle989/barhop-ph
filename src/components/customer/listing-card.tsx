@@ -55,7 +55,7 @@ export function ListingCard({ listing, variant = "grid" }: ListingCardProps) {
             {imageUrl ? (
               <Image
                 src={imageUrl}
-                alt={name}
+                alt={`${name} - ${primaryCategory} in ${city}`}
                 fill
                 sizes="(max-width: 640px) 144px, 192px"
                 className="object-cover"
@@ -108,9 +108,9 @@ export function ListingCard({ listing, variant = "grid" }: ListingCardProps) {
         {imageUrl ? (
           <Image
             src={imageUrl}
-            alt={name}
+            alt={`${name} - ${primaryCategory} in ${city}`}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover"
           />
         ) : (
