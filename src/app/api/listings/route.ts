@@ -237,6 +237,9 @@ export async function GET(request: NextRequest) {
       tags: string[];
     };
 
+    // Use ILIKE for partial name matching + full-text search for description matching
+    const likePattern = `%${q}%`;
+
     let listings: SearchRow[];
     let total: number;
 
@@ -246,17 +249,19 @@ export async function GET(request: NextRequest) {
                is_promoted AS "isPromoted", open_hours AS "openHours", tags
         FROM listings
         WHERE status = 'published'
-          AND search_vector @@ plainto_tsquery('english', ${q})
+          AND (name ILIKE ${likePattern} OR search_vector @@ plainto_tsquery('english', ${q}))
           AND open_hours->>${phtDay} IS NOT NULL
           AND open_hours->${phtDay}->>'open' IS NOT NULL
-        ORDER BY is_promoted DESC, ts_rank(search_vector, plainto_tsquery('english', ${q})) DESC
+        ORDER BY is_promoted DESC,
+          CASE WHEN name ILIKE ${likePattern} THEN 0 ELSE 1 END,
+          ts_rank(search_vector, plainto_tsquery('english', ${q})) DESC
         LIMIT ${limit} OFFSET ${offset}
       `;
 
       const countResult = await db.$queryRaw<[{ count: number }]>`
         SELECT COUNT(*)::int AS count FROM listings
         WHERE status = 'published'
-          AND search_vector @@ plainto_tsquery('english', ${q})
+          AND (name ILIKE ${likePattern} OR search_vector @@ plainto_tsquery('english', ${q}))
           AND open_hours->>${phtDay} IS NOT NULL
           AND open_hours->${phtDay}->>'open' IS NOT NULL
       `;
@@ -269,15 +274,17 @@ export async function GET(request: NextRequest) {
                is_promoted AS "isPromoted", open_hours AS "openHours", tags
         FROM listings
         WHERE status = 'published'
-          AND search_vector @@ plainto_tsquery('english', ${q})
-        ORDER BY is_promoted DESC, ts_rank(search_vector, plainto_tsquery('english', ${q})) DESC
+          AND (name ILIKE ${likePattern} OR search_vector @@ plainto_tsquery('english', ${q}))
+        ORDER BY is_promoted DESC,
+          CASE WHEN name ILIKE ${likePattern} THEN 0 ELSE 1 END,
+          ts_rank(search_vector, plainto_tsquery('english', ${q})) DESC
         LIMIT ${limit} OFFSET ${offset}
       `;
 
       const countResult = await db.$queryRaw<[{ count: number }]>`
         SELECT COUNT(*)::int AS count FROM listings
         WHERE status = 'published'
-          AND search_vector @@ plainto_tsquery('english', ${q})
+          AND (name ILIKE ${likePattern} OR search_vector @@ plainto_tsquery('english', ${q}))
       `;
 
       listings = rows;
