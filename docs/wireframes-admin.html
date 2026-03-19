@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BarHop PH — Admin Wireframes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0A0F;--surface:#12121A;--card:#1A1A2E;--overlay:#222236;
+  --purple:#A855F7;--pink:#EC4899;--cyan:#06B6D4;
+  --text:#F8FAFC;--text2:#94A3B8;--muted:#64748B;
+  --green:#22C55E;--red:#EF4444;--gold:#F59E0B;
+  --border:#2D2D44;--borderh:#3D3D5C;
+  --r:12px;--sidebar:240px;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh}
+h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
+a{color:inherit;text-decoration:none}
+input,select,textarea{font-family:'Inter',sans-serif;font-size:14px}
+
+/* PAGE NAV TABS */
+#page-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:#0d0d14;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:4px;padding:8px 16px;overflow-x:auto;scrollbar-width:none}
+#page-nav::-webkit-scrollbar{display:none}
+#page-nav button{background:var(--overlay);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;cursor:pointer;white-space:nowrap;font-size:12px;font-family:'Inter',sans-serif;transition:all .2s}
+#page-nav button.active,#page-nav button:hover{background:var(--purple);border-color:var(--purple);color:#fff}
+#page-nav .nav-label{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--muted);margin-right:8px;white-space:nowrap}
+
+/* PAGES */
+.page{display:none;padding-top:49px}
+.page.active{display:block}
+
+/* ===================== LOGIN ===================== */
+#login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+#login-page::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(168,85,247,.18) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.login-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:40px;width:100%;max-width:480px;position:relative;z-index:1}
+.login-logo{text-align:center;margin-bottom:32px}
+.login-logo .logo-text{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;background:linear-gradient(135deg,var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.login-logo .logo-sub{color:var(--muted);font-size:13px;margin-top:4px}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;color:var(--text2);font-size:13px;margin-bottom:6px;font-weight:500}
+.form-control{width:100%;background:var(--overlay);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);outline:none;transition:border-color .2s}
+.form-control:focus{border-color:var(--purple)}
+.form-control::placeholder{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;border:none;transition:all .2s;font-family:'Inter',sans-serif}
+.btn-primary{background:linear-gradient(135deg,var(--purple),#7C3AED);color:#fff}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-secondary{background:var(--overlay);border:1px solid var(--border);color:var(--text2)}
+.btn-secondary:hover{border-color:var(--borderh);color:var(--text)}
+.btn-danger{background:transparent;border:1px solid var(--red);color:var(--red)}
+.btn-danger:hover{background:rgba(239,68,68,.1)}
+.btn-full{width:100%;justify-content:center}
+.btn-sm{padding:6px 12px;font-size:13px}
+.error-msg{color:var(--red);font-size:13px;margin-top:12px;padding:10px 14px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;display:none}
+.error-msg.show{display:block}
+
+/* ===================== LAYOUT ===================== */
+.admin-layout{display:flex;min-height:calc(100vh - 49px)}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:49px;bottom:0;left:0;z-index:100;transition:transform .3s}
+.sidebar-logo{padding:20px;border-bottom:1px solid var(--border)}
+.sidebar-logo .logo{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;background:linear-gradient(135deg,var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sidebar-logo .logo-tag{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.sidebar-nav{flex:1;padding:12px 0;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 20px;color:var(--text2);cursor:pointer;transition:all .2s;position:relative;font-size:14px;font-weight:500}
+.nav-item:hover{color:var(--text);background:rgba(168,85,247,.06)}
+.nav-item.active{color:var(--purple);background:rgba(168,85,247,.1)}
+.nav-item.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--purple);border-radius:0 2px 2px 0}
+.nav-item .icon{font-size:18px;width:20px;text-align:center}
+.nav-item .nav-ext{margin-left:auto;font-size:11px;opacity:.5}
+.sidebar-user{padding:16px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.user-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--pink));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.user-info .user-name{font-size:13px;font-weight:600;color:var(--text)}
+.user-info .user-role{font-size:11px;color:var(--muted)}
+.logout-link{display:block;font-size:12px;color:var(--muted);margin-top:2px;cursor:pointer;transition:color .2s}
+.logout-link:hover{color:var(--red)}
+
+/* MAIN CONTENT */
+.main{margin-left:var(--sidebar);flex:1;padding:24px;overflow-y:auto;min-height:calc(100vh - 49px)}
+.top-bar{display:flex;align-items:center;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.top-bar h2{font-size:22px;font-weight:700;flex:1}
+.search-input{background:var(--overlay);border:1px solid var(--border);border-radius:8px;padding:8px 14px;color:var(--text);width:240px;outline:none;transition:border-color .2s}
+.search-input::placeholder{color:var(--muted)}
+.search-input:focus{border-color:var(--purple)}
+
+/* STAT CARDS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;display:flex;align-items:flex-start;gap:14px;transition:border-color .2s}
+.stat-card:hover{border-color:var(--borderh)}
+.stat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.stat-icon.purple{background:rgba(168,85,247,.15)}
+.stat-icon.green{background:rgba(34,197,94,.15)}
+.stat-icon.gold{background:rgba(245,158,11,.15)}
+.stat-icon.cyan{background:rgba(6,182,212,.15)}
+.stat-number{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:var(--text);line-height:1}
+.stat-label{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* SECTION */
+.section{background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:20px}
+.section-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600}
+
+/* TABLE */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{padding:12px 16px;text-align:left;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:12px 16px;border-bottom:1px solid rgba(45,45,68,.5);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(168,85,247,.03)}
+.listing-img{width:40px;height:40px;border-radius:8px;flex-shrink:0}
+.listing-name{font-weight:600;color:var(--text)}
+.listing-sub{font-size:12px;color:var(--muted)}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.badge-green{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.badge-yellow{background:rgba(245,158,11,.12);color:var(--gold);border:1px solid rgba(245,158,11,.2)}
+.badge-gray{background:rgba(100,116,139,.12);color:var(--muted);border:1px solid rgba(100,116,139,.2)}
+.badge-purple{background:rgba(168,85,247,.12);color:var(--purple);border:1px solid rgba(168,85,247,.2)}
+.badge-cyan{background:rgba(6,182,212,.12);color:var(--cyan);border:1px solid rgba(6,182,212,.2)}
+
+/* PAGINATION */
+.table-footer{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border)}
+.table-info{font-size:13px;color:var(--muted)}
+.pagination{display:flex;gap:4px}
+.page-btn{width:32px;height:32px;border-radius:6px;border:1px solid var(--border);background:var(--overlay);color:var(--text2);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif}
+.page-btn.active,.page-btn:hover{background:var(--purple);border-color:var(--purple);color:#fff}
+
+/* FILTERS */
+.filters-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.filter-select{background:var(--overlay);border:1px solid var(--border);border-radius:8px;padding:7px 12px;color:var(--text);outline:none;cursor:pointer;font-size:13px;font-family:'Inter',sans-serif}
+.filter-select:focus{border-color:var(--purple)}
+
+/* QUICK ACTIONS */
+.quick-actions{display:flex;gap:12px;margin-top:8px}
+
+/* GRADIENT PLACEHOLDERS */
+.grad-1{background:linear-gradient(135deg,#A855F7,#EC4899)}
+.grad-2{background:linear-gradient(135deg,#06B6D4,#A855F7)}
+.grad-3{background:linear-gradient(135deg,#EC4899,#F59E0B)}
+.grad-4{background:linear-gradient(135deg,#22C55E,#06B6D4)}
+.grad-5{background:linear-gradient(135deg,#F59E0B,#EF4444)}
+.grad-6{background:linear-gradient(135deg,#A855F7,#06B6D4)}
+.grad-7{background:linear-gradient(135deg,#EC4899,#A855F7)}
+.grad-8{background:linear-gradient(135deg,#F59E0B,#A855F7)}
+
+/* ===================== FORM STYLES ===================== */
+.form-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:20px;overflow:hidden}
+.form-section-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;padding:16px 20px;border-bottom:1px solid var(--border);background:rgba(168,85,247,.04)}
+.form-body{padding:20px}
+.form-row{display:grid;gap:16px;margin-bottom:16px}
+.form-row:last-child{margin-bottom:0}
+.form-row.cols-2{grid-template-columns:1fr 1fr}
+.form-row.cols-3{grid-template-columns:1fr 1fr 1fr}
+.form-row.cols-4{grid-template-columns:1fr 1fr 1fr 1fr}
+textarea.form-control{resize:vertical;min-height:120px}
+
+/* TOGGLE */
+.toggle-wrap{display:flex;align-items:center;gap:10px}
+.toggle{position:relative;width:44px;height:24px;cursor:pointer}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{width:44px;height:24px;background:var(--border);border-radius:12px;transition:background .2s;display:block}
+.toggle input:checked+.toggle-track{background:var(--purple)}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .2s;pointer-events:none}
+.toggle input:checked~.toggle-thumb{transform:translateX(20px)}
+.toggle-label{font-size:14px;color:var(--text2)}
+
+/* TAGS/PILLS */
+.tags-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.tag-pill{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--overlay);color:var(--text2);cursor:pointer;font-size:13px;font-weight:500;transition:all .2s;user-select:none}
+.tag-pill.selected,.tag-pill:hover{background:rgba(168,85,247,.15);border-color:var(--purple);color:var(--purple)}
+
+/* SELECTED BADGES ROW */
+.selected-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.sel-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:rgba(168,85,247,.15);border:1px solid var(--purple);border-radius:20px;color:var(--purple);font-size:12px;font-weight:600}
+.sel-badge .rm{cursor:pointer;opacity:.6;transition:opacity .2s}
+.sel-badge .rm:hover{opacity:1}
+
+/* CATEGORY DROPDOWN */
+.cat-dropdown{position:relative}
+.cat-dropdown-btn{width:100%;background:var(--overlay);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text2);text-align:left;cursor:pointer;font-size:14px;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:space-between}
+.cat-dropdown-menu{position:absolute;top:calc(100%+4px);left:0;right:0;background:var(--overlay);border:1px solid var(--border);border-radius:8px;z-index:50;padding:6px;display:none;max-height:200px;overflow-y:auto}
+.cat-dropdown-menu.open{display:block}
+.cat-option{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;cursor:pointer;transition:background .15s}
+.cat-option:hover{background:rgba(168,85,247,.08)}
+.cat-option input[type=checkbox]{accent-color:var(--purple);width:15px;height:15px}
+
+/* DROPZONE */
+.dropzone{border:2px dashed var(--border);border-radius:var(--r);padding:32px;text-align:center;cursor:pointer;transition:all .2s}
+.dropzone:hover{border-color:var(--purple);background:rgba(168,85,247,.04)}
+.dropzone .dz-icon{font-size:32px;margin-bottom:10px}
+.dropzone .dz-text{color:var(--text2);font-size:14px}
+.dropzone .dz-hint{color:var(--muted);font-size:12px;margin-top:4px}
+
+/* GALLERY */
+.gallery-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.gallery-slot{width:80px;height:80px;border-radius:8px;position:relative;flex-shrink:0}
+.gallery-slot.filled{}
+.gallery-slot.empty{border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:20px;cursor:pointer;transition:border-color .2s}
+.gallery-slot.empty:hover{border-color:var(--purple);color:var(--purple)}
+.gallery-rm{position:absolute;top:-6px;right:-6px;width:18px;height:18px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer;color:#fff}
+
+/* HOURS TABLE */
+.hours-table{width:100%;border-collapse:collapse}
+.hours-table td{padding:8px 0;vertical-align:middle}
+.hours-table td:first-child{width:100px;font-weight:600;color:var(--text2)}
+.hours-table .time-input{width:110px}
+.hours-sep{color:var(--muted);margin:0 10px}
+
+/* MENU ITEMS */
+.menu-item-row{display:grid;grid-template-columns:1fr 120px 1fr auto;gap:10px;align-items:center;margin-bottom:10px}
+.price-input-wrap{position:relative}
+.price-prefix{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px}
+.price-input-wrap input{padding-left:28px}
+
+/* EVENT CARD */
+.event-card{background:var(--overlay);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px}
+.event-card-grid{display:grid;grid-template-columns:1fr 160px 160px auto;gap:10px;margin-bottom:10px;align-items:center}
+
+/* RICH TEXT */
+.richtext-toolbar{display:flex;gap:4px;padding:8px;border:1px solid var(--border);border-bottom:none;border-radius:8px 8px 0 0;background:var(--overlay)}
+.richtext-btn{padding:4px 8px;border:none;background:transparent;color:var(--text2);cursor:pointer;border-radius:4px;font-size:13px;font-family:'Inter',sans-serif}
+.richtext-btn:hover{background:rgba(168,85,247,.1);color:var(--purple)}
+.richtext-area{border-radius:0 0 8px 8px;border-top:none}
+
+/* USERS TABLE */
+.user-cell{display:flex;align-items:center;gap:10px}
+.u-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+
+/* HAMBURGER */
+.hamburger{display:none;position:fixed;top:57px;left:12px;z-index:200;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px;cursor:pointer;font-size:18px}
+
+/* OVERLAY SCRIM */
+.scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;top:49px}
+.scrim.show{display:block}
+
+/* WELCOME */
+.welcome-header{margin-bottom:24px}
+.welcome-header h2{font-size:24px;font-weight:700}
+.welcome-header p{color:var(--muted);font-size:14px;margin-top:4px}
+
+/* ACTIVITY TABLE */
+.activity-time{color:var(--muted);font-size:12px}
+.activity-action{color:var(--text2);font-size:13px}
+
+/* SHOW/HIDE PASSWORD */
+.pw-wrap{position:relative}
+.pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:0}
+
+/* ASSIGN LISTINGS */
+#assign-section{margin-top:16px}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .hamburger{display:flex}
+  .scrim{display:none}
+  .scrim.show{display:block}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .form-row.cols-2,.form-row.cols-3,.form-row.cols-4{grid-template-columns:1fr}
+  .menu-item-row{grid-template-columns:1fr 1fr;grid-template-rows:auto auto}
+  .event-card-grid{grid-template-columns:1fr 1fr}
+  .top-bar{gap:8px}
+  .search-input{width:160px}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr}
+  .top-bar h2{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<!-- PAGE NAVIGATION -->
+<nav id="page-nav">
+  <span class="nav-label">BarHop Admin</span>
+  <button class="active" onclick="showPage('login')">Login</button>
+  <button onclick="showPage('dashboard')">Dashboard</button>
+  <button onclick="showPage('listings')">Manage Listings</button>
+  <button onclick="showPage('listing-new')">Create Listing</button>
+  <button onclick="showPage('users')">Manage Users</button>
+  <button onclick="showPage('user-new')">Create User</button>
+</nav>
+
+<!-- HAMBURGER -->
+<button class="hamburger" id="hamburger" onclick="toggleSidebar()">☰</button>
+<div class="scrim" id="scrim" onclick="closeSidebar()"></div>
+
+<!-- ============================================================ -->
+<!-- PAGE: LOGIN                                                   -->
+<!-- ============================================================ -->
+<div id="login-page" class="page active" style="min-height:calc(100vh - 49px)">
+  <div style="min-height:calc(100vh - 49px);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+    <div style="position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(168,85,247,.18) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none"></div>
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="logo-text">⚡ BarHop Admin</div>
+        <div class="logo-sub">Management Portal</div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" class="form-control" placeholder="admin@barhop.ph" value="admin@barhop.ph">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="pw-wrap">
+          <input type="password" class="form-control" id="login-pw" placeholder="••••••••" value="password123">
+          <button class="pw-toggle" onclick="togglePw('login-pw',this)">👁</button>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="showPage('dashboard')">Sign In</button>
+      <div class="error-msg" id="login-error">Invalid email or password. Please try again.</div>
+      <div style="text-align:center;margin-top:16px">
+        <span style="color:var(--muted);font-size:12px">Demo: click Sign In to enter dashboard</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE: DASHBOARD                                               -->
+<!-- ============================================================ -->
+<div id="dashboard-page" class="page">
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar-dashboard">
+      <div class="sidebar-logo">
+        <div class="logo">⚡ BarHop PH</div>
+        <div class="logo-tag">Admin Portal</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-item active" onclick="showPage('dashboard')"><span class="icon">📊</span>Dashboard</div>
+        <div class="nav-item" onclick="showPage('listings')"><span class="icon">🏢</span>Listings</div>
+        <div class="nav-item" onclick="showPage('users')"><span class="icon">👥</span>Users</div>
+        <div class="nav-item"><span class="icon">📈</span>Analytics<span class="nav-ext">↗</span></div>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-avatar">SA</div>
+        <div class="user-info">
+          <div class="user-name">Super Admin</div>
+          <div class="user-role">admin@barhop.ph</div>
+          <span class="logout-link" onclick="showPage('login')">← Logout</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="welcome-header">
+        <h2>Welcome back, Admin 👋</h2>
+        <p>Thursday, March 19, 2026 — Here's what's happening today</p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon purple">🏢</div>
+          <div><div class="stat-number">247</div><div class="stat-label">Total Listings</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">✅</div>
+          <div><div class="stat-number">231</div><div class="stat-label">Published</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon gold">⭐</div>
+          <div><div class="stat-number">12</div><div class="stat-label">Promoted</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon cyan">📝</div>
+          <div><div class="stat-number">4</div><div class="stat-label">Draft</div></div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="section" style="margin-bottom:20px">
+        <div class="section-header">
+          <span class="section-title">Recent Activity</span>
+          <button class="btn btn-secondary btn-sm">View All</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Listing</th><th>Action</th><th>By</th><th>Timestamp</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="listing-name">Valkyrie Rooftop Bar</span></td><td class="activity-action">Updated hours</td><td><span class="badge badge-purple">Super Admin</span></td><td class="activity-time">2 hours ago</td></tr>
+              <tr><td><span class="listing-name">Palace Pool Club</span></td><td class="activity-action">Published listing</td><td><span class="badge badge-purple">Super Admin</span></td><td class="activity-time">4 hours ago</td></tr>
+              <tr><td><span class="listing-name">The Curator</span></td><td class="activity-action">Added gallery photos</td><td><span class="badge badge-cyan">Admin</span></td><td class="activity-time">Yesterday</td></tr>
+              <tr><td><span class="listing-name">Nox Bar BGC</span></td><td class="activity-action">Updated menu</td><td><span class="badge badge-cyan">Admin</span></td><td class="activity-time">Yesterday</td></tr>
+              <tr><td><span class="listing-name">Opus Manila</span></td><td class="activity-action">Enabled promoted</td><td><span class="badge badge-purple">Super Admin</span></td><td class="activity-time">2 days ago</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="section">
+        <div class="section-header"><span class="section-title">Quick Actions</span></div>
+        <div style="padding:20px">
+          <div class="quick-actions">
+            <button class="btn btn-primary" onclick="showPage('listing-new')">＋ Create Listing</button>
+            <button class="btn btn-secondary" onclick="showPage('users')">👥 Manage Users</button>
+            <button class="btn btn-secondary">📈 View Analytics ↗</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE: MANAGE LISTINGS                                         -->
+<!-- ============================================================ -->
+<div id="listings-page" class="page">
+  <div class="admin-layout">
+    <aside class="sidebar" id="sidebar-listings">
+      <div class="sidebar-logo"><div class="logo">⚡ BarHop PH</div><div class="logo-tag">Admin Portal</div></div>
+      <nav class="sidebar-nav">
+        <div class="nav-item" onclick="showPage('dashboard')"><span class="icon">📊</span>Dashboard</div>
+        <div class="nav-item active" onclick="showPage('listings')"><span class="icon">🏢</span>Listings</div>
+        <div class="nav-item" onclick="showPage('users')"><span class="icon">👥</span>Users</div>
+        <div class="nav-item"><span class="icon">📈</span>Analytics<span class="nav-ext">↗</span></div>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-avatar">SA</div>
+        <div class="user-info"><div class="user-name">Super Admin</div><div class="user-role">admin@barhop.ph</div><span class="logout-link" onclick="showPage('login')">← Logout</span></div>
+      </div>
+    </aside>
+    <main class="main">
+      <div class="top-bar">
+        <h2>Listings</h2>
+        <input type="text" class="search-input" placeholder="🔍  Search listings...">
+        <button class="btn btn-primary" onclick="showPage('listing-new')">＋ Create Listing</button>
+      </div>
+
+      <!-- Filters -->
+      <div class="filters-bar">
+        <select class="filter-select"><option>All Status</option><option>Published</option><option>Draft</option><option>Archived</option></select>
+        <select class="filter-select"><option>All Regions</option><option>Metro Manila</option><option>Cebu</option><option>Davao</option><option>Boracay</option></select>
+        <div class="toggle-wrap" style="margin-left:8px">
+          <label class="toggle"><input type="checkbox" id="promoted-filter"><span class="toggle-track"></span><span class="toggle-thumb"></span></label>
+          <span class="toggle-label">Promoted only</span>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="section">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Image</th><th>Name</th><th>City</th><th>Status</th><th>⭐</th><th>👁 Views</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="listing-img grad-1"></div></td>
+                <td><div class="listing-name">Valkyrie Rooftop Bar</div></td>
+                <td style="color:var(--text2)">Taguig, BGC</td>
+                <td><span class="badge badge-green">● Published</span></td>
+                <td style="color:var(--gold)">⭐</td>
+                <td style="color:var(--text2)">12,847</td>
+                <td><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="showPage('listing-new')">✏️ Edit</button><button class="btn btn-danger btn-sm">🗑 Del</button></div></td>
+              </tr>
+              <tr>
+                <td><div class="listing-img grad-2"></div></td>
+                <td><div class="listing-name">Palace Pool Club</div></td>
+                <td style="color:var(--text2)">Manila, Malate</td>
+                <td><span class="badge badge-green">● Published</span></td>
+                <td style="color:var(--gold)">⭐</td>
+                <td style="color:var(--text2)">9,312</td>
+                <td><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="showPage('listing-new')">✏️ Edit</button><button class="btn btn-danger btn-sm">🗑 Del</button></div></td>
+              </tr>
+              <tr>
+                <td><div class="listing-img grad-3"></div></td>
+                <td><div class="listing-name">The Curator</div></td>
+                <td style="color:var(--text2)">Makati, Poblacion</td>
+                <td><span class="badge badge-green">● Published</span></td>
+                <td style="color:var(--muted)">—</td>
+                <td style="color:var(--text2)">7,001</td>
+                <td><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="showPage('listing-new')">✏️ Edit</button><button class="btn btn-danger btn-sm">🗑 Del</button></div></td>
+              </tr>
+              <tr>
+                <td><div class="listing-img grad-4"></div></td>
+                <td><div class="listing-name">Nox Bar BGC</div></td>
+                <td style="color:var(--text2)">Taguig, BGC</td>
+                <td><span class="badge badge-green">● Published</span></td>
+                <td style="color:var(--muted)">—</td>
+                <td style="color:var(--text2)">5,499</td>
+                <td><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="showPage('listing-new')">✏️ Edit</button><button class="btn btn-danger btn-sm">🗑 Del</button></div></td>
+              </tr>
+              <tr>
+                <td><div class="listing-img grad-5"></div></td>
+                <td><div class="listing-name">Opus Manila</div></td>
+                <td style="color:var(--text2)">Makati, CBD</td>
+                <td><span class="badge badge-green">● Published</span></td>
+                <td style="color:var(--gold)">⭐</td>
+                <td style="color:var(--text2)">4,877</td>
+                <td><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="showPage('listing-new')">✏️ Edit</button><button class="btn btn-danger btn-sm">🗑 Del</button></div></td>
+              </tr>
+              <tr>
+                <td><div class="listing-img grad-6"></div></td>
+                <td><div class="listing-name">Saguijo Bar</div></td>
+                <td style="color:var(--text2)">Makati, Guijo St</td>
+                <td><span class="badge badge-yellow">● Draft</span></td>
+                <td style="color:var(--muted)">—</td>
+                <td style="color:var(--text2)">2,134</td>
+                <td><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="showPage('listing-new')">✏️ Edit</button><button class="btn btn-danger btn-sm">🗑 Del</button></div></td>
+              </tr>
+              <tr>
+                <td><div class="listing-img grad-7"></div></td>
+                <td><div class="listing-name">XX XX Makati</div></td>
+                <td style="color:var(--text2)">Makati, Poblacion</td>
+                <td><span class="badge badge-yellow">● Draft</span></td>
+                <td style="color:var(--muted)">—</td>
+                <td style="color:var(--text2)">988</td>
+                <td><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="showPage('listing-new')">✏️ Edit</button><button class="btn btn-danger btn-sm">🗑 Del</button></div></td>
+              </tr>
+              <tr>
+                <td><div class="listing-img grad-8"></div></td>
+                <td><div class="listing-name">Club Fuego Cebu</div></td>
+                <td style="color:var(--text2)">Cebu City, IT Park</td>
+                <td><span class="badge badge-gray">● Archived</span></td>
+                <td style="color:var(--muted)">—</td>
+                <td style="color:var(--text2)">412</td>
+                <td><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="showPage('listing-new')">✏️ Edit</button><button class="btn btn-danger btn-sm">🗑 Del</button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <span class="table-info">Showing 1–8 of 247 listings</span>
+          <div class="pagination">
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">…</button>
+            <button class="page-btn">31</button>
+            <button class="page-btn">›</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE: CREATE/EDIT LISTING                                     -->
+<!-- ============================================================ -->
+<div id="listing-new-page" class="page">
+  <div class="admin-layout">
+    <aside class="sidebar" id="sidebar-listing-new">
+      <div class="sidebar-logo"><div class="logo">⚡ BarHop PH</div><div class="logo-tag">Admin Portal</div></div>
+      <nav class="sidebar-nav">
+        <div class="nav-item" onclick="showPage('dashboard')"><span class="icon">📊</span>Dashboard</div>
+        <div class="nav-item active" onclick="showPage('listings')"><span class="icon">🏢</span>Listings</div>
+        <div class="nav-item" onclick="showPage('users')"><span class="icon">👥</span>Users</div>
+        <div class="nav-item"><span class="icon">📈</span>Analytics<span class="nav-ext">↗</span></div>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-avatar">SA</div>
+        <div class="user-info"><div class="user-name">Super Admin</div><div class="user-role">admin@barhop.ph</div><span class="logout-link" onclick="showPage('login')">← Logout</span></div>
+      </div>
+    </aside>
+    <main class="main">
+      <div class="top-bar">
+        <button class="btn btn-secondary btn-sm" onclick="showPage('listings')">← Back</button>
+        <h2>Create New Listing</h2>
+        <button class="btn btn-secondary">Save as Draft</button>
+        <button class="btn btn-primary">Publish</button>
+      </div>
+
+      <!-- BASIC INFO -->
+      <div class="form-card">
+        <div class="form-section-title">📋 Basic Info</div>
+        <div class="form-body">
+          <div class="form-row">
+            <div class="form-group" style="margin:0">
+              <label>Venue Name</label>
+              <input type="text" class="form-control" placeholder="e.g. Valkyrie Rooftop Bar" value="Valkyrie Rooftop Bar">
+            </div>
+          </div>
+          <div class="form-row cols-2">
+            <div class="form-group" style="margin:0">
+              <label>Categories</label>
+              <div class="selected-tags" id="sel-cats">
+                <span class="sel-badge">Rooftop Bar <span class="rm" onclick="removeCat(this)">✕</span></span>
+                <span class="sel-badge">Night Club <span class="rm" onclick="removeCat(this)">✕</span></span>
+              </div>
+              <div class="cat-dropdown">
+                <button class="cat-dropdown-btn" onclick="toggleCatMenu()">＋ Add Categories <span>▾</span></button>
+                <div class="cat-dropdown-menu" id="cat-menu">
+                  <div class="cat-option"><input type="checkbox" checked> Rooftop Bar</div>
+                  <div class="cat-option"><input type="checkbox" checked> Night Club</div>
+                  <div class="cat-option"><input type="checkbox"> Sports Bar</div>
+                  <div class="cat-option"><input type="checkbox"> Cocktail Bar</div>
+                  <div class="cat-option"><input type="checkbox"> Dive Bar</div>
+                  <div class="cat-option"><input type="checkbox"> Beach Bar</div>
+                  <div class="cat-option"><input type="checkbox"> Wine Bar</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="form-group" style="margin-bottom:12px">
+                <label>Status</label>
+                <select class="form-control">
+                  <option>Draft</option>
+                  <option selected>Published</option>
+                  <option>Archived</option>
+                </select>
+              </div>
+              <div class="toggle-wrap">
+                <label class="toggle"><input type="checkbox" checked id="promoted-toggle"><span class="toggle-track"></span><span class="toggle-thumb"></span></label>
+                <span class="toggle-label">⭐ Promoted Listing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOCATION -->
+      <div class="form-card">
+        <div class="form-section-title">📍 Location</div>
+        <div class="form-body">
+          <div class="form-row cols-2">
+            <div class="form-group" style="margin:0">
+              <label>Region</label>
+              <select class="form-control"><option>Metro Manila</option><option>Cebu</option><option>Davao</option><option>Boracay</option></select>
+            </div>
+            <div class="form-group" style="margin:0">
+              <label>City / Area</label>
+              <select class="form-control"><option>Taguig (BGC)</option><option>Makati</option><option>Pasig</option><option>Manila</option></select>
+            </div>
+          </div>
+          <div class="form-row" style="margin-top:16px">
+            <div class="form-group" style="margin:0">
+              <label>Street Address</label>
+              <input type="text" class="form-control" value="5th Ave corner 25th St, Bonifacio Global City, Taguig">
+            </div>
+          </div>
+          <div class="form-row cols-2" style="margin-top:16px">
+            <div class="form-group" style="margin:0">
+              <label>Latitude</label>
+              <input type="text" class="form-control" placeholder="14.5510" value="14.5510">
+            </div>
+            <div class="form-group" style="margin:0">
+              <label>Longitude</label>
+              <input type="text" class="form-control" placeholder="121.0491" value="121.0491">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEDIA -->
+      <div class="form-card">
+        <div class="form-section-title">🖼️ Media</div>
+        <div class="form-body">
+          <div class="form-group">
+            <label>Primary Image</label>
+            <div class="dropzone">
+              <div class="dz-icon">📸</div>
+              <div class="dz-text">Drop image here or <span style="color:var(--purple);cursor:pointer">click to upload</span></div>
+              <div class="dz-hint">PNG, JPG, WebP — max 5MB</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Gallery (up to 10 images)</label>
+            <div class="gallery-row">
+              <div class="gallery-slot filled grad-1"><span class="gallery-rm">✕</span></div>
+              <div class="gallery-slot filled grad-2"><span class="gallery-rm">✕</span></div>
+              <div class="gallery-slot filled grad-3"><span class="gallery-rm">✕</span></div>
+              <div class="gallery-slot empty">＋</div>
+              <div class="gallery-slot empty">＋</div>
+              <div class="gallery-slot empty">＋</div>
+              <div class="gallery-slot empty">＋</div>
+            </div>
+          </div>
+          <div class="form-group" style="margin:0">
+            <label>Video URL (YouTube / Vimeo)</label>
+            <input type="text" class="form-control" placeholder="https://youtube.com/watch?v=...">
+          </div>
+        </div>
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div class="form-card">
+        <div class="form-section-title">📝 Description</div>
+        <div class="form-body">
+          <div class="richtext-toolbar">
+            <button class="richtext-btn"><b>B</b></button>
+            <button class="richtext-btn"><i>I</i></button>
+            <button class="richtext-btn"><u>U</u></button>
+            <button class="richtext-btn">🔗</button>
+            <button class="richtext-btn">H1</button>
+            <button class="richtext-btn">H2</button>
+            <button class="richtext-btn">• List</button>
+          </div>
+          <textarea class="form-control richtext-area" style="min-height:180px;border-radius:0 0 8px 8px">Valkyrie Rooftop Bar is Metro Manila's premier open-air nightlife destination, perched atop the iconic W Hotel in Bonifacio Global City. Offering panoramic views of the BGC skyline, world-class DJs, and an unparalleled cocktail menu, Valkyrie defines luxury nightlife in the Philippines.</textarea>
+        </div>
+      </div>
+
+      <!-- TAGS -->
+      <div class="form-card">
+        <div class="form-section-title">🏷️ Tags</div>
+        <div class="form-body">
+          <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Click tags to toggle selection</p>
+          <div class="tags-wrap" id="tags-container">
+            <span class="tag-pill selected" onclick="toggleTag(this)">🐾 Pet Friendly</span>
+            <span class="tag-pill" onclick="toggleTag(this)">🅿️ Parking Available</span>
+            <span class="tag-pill selected" onclick="toggleTag(this)">📶 Wi-Fi Available</span>
+            <span class="tag-pill selected" onclick="toggleTag(this)">🎵 Live Music</span>
+            <span class="tag-pill" onclick="toggleTag(this)">🌿 Outdoor Seating</span>
+            <span class="tag-pill selected" onclick="toggleTag(this)">💃 Dance Floor</span>
+            <span class="tag-pill selected" onclick="toggleTag(this)">💎 VIP Area</span>
+            <span class="tag-pill" onclick="toggleTag(this)">🍔 Food Available</span>
+            <span class="tag-pill" onclick="toggleTag(this)">🍺 Happy Hour</span>
+            <span class="tag-pill" onclick="toggleTag(this)">🕐 24/7</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPEN HOURS -->
+      <div class="form-card">
+        <div class="form-section-title">🕐 Open Hours</div>
+        <div class="form-body">
+          <table class="hours-table">
+            <tbody id="hours-body">
+              <tr data-day="Mon">
+                <td>Monday</td>
+                <td><input type="time" class="form-control time-input" value="17:00"></td>
+                <td><span class="hours-sep">–</span></td>
+                <td><input type="time" class="form-control time-input" value="00:00"></td>
+                <td style="padding-left:16px"><div class="toggle-wrap"><label class="toggle"><input type="checkbox" onchange="toggleDay(this)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label" style="font-size:12px">Closed</span></div></td>
+              </tr>
+              <tr data-day="Tue">
+                <td>Tuesday</td>
+                <td><input type="time" class="form-control time-input" value="17:00"></td>
+                <td><span class="hours-sep">–</span></td>
+                <td><input type="time" class="form-control time-input" value="02:00"></td>
+                <td style="padding-left:16px"><div class="toggle-wrap"><label class="toggle"><input type="checkbox" onchange="toggleDay(this)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label" style="font-size:12px">Closed</span></div></td>
+              </tr>
+              <tr data-day="Wed">
+                <td>Wednesday</td>
+                <td><input type="time" class="form-control time-input" value="17:00"></td>
+                <td><span class="hours-sep">–</span></td>
+                <td><input type="time" class="form-control time-input" value="02:00"></td>
+                <td style="padding-left:16px"><div class="toggle-wrap"><label class="toggle"><input type="checkbox" onchange="toggleDay(this)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label" style="font-size:12px">Closed</span></div></td>
+              </tr>
+              <tr data-day="Thu">
+                <td>Thursday</td>
+                <td><input type="time" class="form-control time-input" value="17:00"></td>
+                <td><span class="hours-sep">–</span></td>
+                <td><input type="time" class="form-control time-input" value="03:00"></td>
+                <td style="padding-left:16px"><div class="toggle-wrap"><label class="toggle"><input type="checkbox" onchange="toggleDay(this)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label" style="font-size:12px">Closed</span></div></td>
+              </tr>
+              <tr data-day="Fri">
+                <td>Friday</td>
+                <td><input type="time" class="form-control time-input" value="17:00"></td>
+                <td><span class="hours-sep">–</span></td>
+                <td><input type="time" class="form-control time-input" value="04:00"></td>
+                <td style="padding-left:16px"><div class="toggle-wrap"><label class="toggle"><input type="checkbox" onchange="toggleDay(this)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label" style="font-size:12px">Closed</span></div></td>
+              </tr>
+              <tr data-day="Sat">
+                <td>Saturday</td>
+                <td><input type="time" class="form-control time-input" value="18:00"></td>
+                <td><span class="hours-sep">–</span></td>
+                <td><input type="time" class="form-control time-input" value="05:00"></td>
+                <td style="padding-left:16px"><div class="toggle-wrap"><label class="toggle"><input type="checkbox" onchange="toggleDay(this)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label" style="font-size:12px">Closed</span></div></td>
+              </tr>
+              <tr data-day="Sun" class="day-closed">
+                <td style="opacity:.4">Sunday</td>
+                <td><input type="time" class="form-control time-input" value="18:00" disabled style="opacity:.4"></td>
+                <td><span class="hours-sep" style="opacity:.4">–</span></td>
+                <td><input type="time" class="form-control time-input" value="02:00" disabled style="opacity:.4"></td>
+                <td style="padding-left:16px"><div class="toggle-wrap"><label class="toggle"><input type="checkbox" checked onchange="toggleDay(this)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label" style="font-size:12px">Closed</span></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MENU -->
+      <div class="form-card">
+        <div class="form-section-title">🍹 Menu</div>
+        <div class="form-body">
+          <div id="menu-items">
+            <div class="menu-item-row">
+              <input type="text" class="form-control" placeholder="Item name" value="Valkyrie Signature Cocktail">
+              <div class="price-input-wrap"><span class="price-prefix">₱</span><input type="text" class="form-control" placeholder="0.00" value="650"></div>
+              <input type="text" class="form-control" placeholder="Description" value="House blend with premium spirits">
+              <button class="btn btn-danger btn-sm" onclick="this.closest('.menu-item-row').remove()">✕</button>
+            </div>
+            <div class="menu-item-row">
+              <input type="text" class="form-control" placeholder="Item name" value="Bottle of Moët & Chandon">
+              <div class="price-input-wrap"><span class="price-prefix">₱</span><input type="text" class="form-control" placeholder="0.00" value="8500"></div>
+              <input type="text" class="form-control" placeholder="Description" value="750ml, served with mixers">
+              <button class="btn btn-danger btn-sm" onclick="this.closest('.menu-item-row').remove()">✕</button>
+            </div>
+            <div class="menu-item-row">
+              <input type="text" class="form-control" placeholder="Item name" value="Truffle Fries">
+              <div class="price-input-wrap"><span class="price-prefix">₱</span><input type="text" class="form-control" placeholder="0.00" value="380"></div>
+              <input type="text" class="form-control" placeholder="Description" value="Crispy fries with truffle aioli">
+              <button class="btn btn-danger btn-sm" onclick="this.closest('.menu-item-row').remove()">✕</button>
+            </div>
+          </div>
+          <button class="btn btn-secondary btn-sm" style="margin-top:8px" onclick="addMenuItem()">＋ Add Menu Item</button>
+        </div>
+      </div>
+
+      <!-- EVENTS -->
+      <div class="form-card">
+        <div class="form-section-title">🎉 Events</div>
+        <div class="form-body">
+          <div id="events-list">
+            <div class="event-card">
+              <div class="event-card-grid">
+                <input type="text" class="form-control" placeholder="Event title" value="Friday Night Sessions">
+                <input type="date" class="form-control" value="2026-03-20">
+                <select class="form-control"><option>One-time</option><option selected>Weekly</option><option>Monthly</option></select>
+                <button class="btn btn-danger btn-sm" onclick="this.closest('.event-card').remove()">✕</button>
+              </div>
+              <textarea class="form-control" style="min-height:72px" placeholder="Event description...">Weekly DJ night featuring Manila's top electronic music artists. Doors open at 10PM, strict dress code applies.</textarea>
+            </div>
+            <div class="event-card">
+              <div class="event-card-grid">
+                <input type="text" class="form-control" placeholder="Event title" value="Valkyrie 8th Anniversary">
+                <input type="date" class="form-control" value="2026-04-12">
+                <select class="form-control"><option selected>One-time</option><option>Weekly</option><option>Monthly</option></select>
+                <button class="btn btn-danger btn-sm" onclick="this.closest('.event-card').remove()">✕</button>
+              </div>
+              <textarea class="form-control" style="min-height:72px" placeholder="Event description...">Celebrate 8 years of Valkyrie with international guest DJs, special cocktails, and exclusive VIP packages.</textarea>
+            </div>
+          </div>
+          <button class="btn btn-secondary btn-sm" style="margin-top:4px" onclick="addEvent()">＋ Add Event</button>
+        </div>
+      </div>
+
+      <!-- CONTACT & SOCIAL -->
+      <div class="form-card" style="margin-bottom:40px">
+        <div class="form-section-title">📞 Contact & Social</div>
+        <div class="form-body">
+          <div class="form-row cols-3">
+            <div class="form-group" style="margin:0">
+              <label>Phone</label>
+              <input type="text" class="form-control" placeholder="+63 2 1234 5678" value="+63 2 8555 1234">
+            </div>
+            <div class="form-group" style="margin:0">
+              <label>WhatsApp</label>
+              <input type="text" class="form-control" placeholder="+63 9XX XXX XXXX" value="+63 917 555 1234">
+            </div>
+            <div class="form-group" style="margin:0">
+              <label>Email</label>
+              <input type="email" class="form-control" placeholder="hello@venue.ph" value="bookings@valkyrie.ph">
+            </div>
+          </div>
+          <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border)">
+            <label style="display:block;color:var(--text2);font-size:13px;margin-bottom:12px;font-weight:600">Social Links</label>
+            <div class="form-row cols-2">
+              <div class="form-group" style="margin:0">
+                <label>📘 Facebook</label>
+                <input type="url" class="form-control" placeholder="https://facebook.com/..." value="https://facebook.com/valkyriemanila">
+              </div>
+              <div class="form-group" style="margin:0">
+                <label>📸 Instagram</label>
+                <input type="url" class="form-control" placeholder="https://instagram.com/..." value="https://instagram.com/valkyriemanila">
+              </div>
+              <div class="form-group" style="margin:0">
+                <label>🎵 TikTok</label>
+                <input type="url" class="form-control" placeholder="https://tiktok.com/@..." value="https://tiktok.com/@valkyriemanila">
+              </div>
+              <div class="form-group" style="margin:0">
+                <label>𝕏 X / Twitter</label>
+                <input type="url" class="form-control" placeholder="https://x.com/..." value="https://x.com/valkyriemanila">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE: MANAGE USERS                                            -->
+<!-- ============================================================ -->
+<div id="users-page" class="page">
+  <div class="admin-layout">
+    <aside class="sidebar" id="sidebar-users">
+      <div class="sidebar-logo"><div class="logo">⚡ BarHop PH</div><div class="logo-tag">Admin Portal</div></div>
+      <nav class="sidebar-nav">
+        <div class="nav-item" onclick="showPage('dashboard')"><span class="icon">📊</span>Dashboard</div>
+        <div class="nav-item" onclick="showPage('listings')"><span class="icon">🏢</span>Listings</div>
+        <div class="nav-item active" onclick="showPage('users')"><span class="icon">👥</span>Users</div>
+        <div class="nav-item"><span class="icon">📈</span>Analytics<span class="nav-ext">↗</span></div>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-avatar">SA</div>
+        <div class="user-info"><div class="user-name">Super Admin</div><div class="user-role">admin@barhop.ph</div><span class="logout-link" onclick="showPage('login')">← Logout</span></div>
+      </div>
+    </aside>
+    <main class="main">
+      <div class="top-bar">
+        <h2>Users</h2>
+        <button class="btn btn-primary" onclick="showPage('user-new')">＋ Create User</button>
+      </div>
+      <div class="section">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Name</th><th>Email</th><th>Role</th><th>Listings</th><th>Created</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="user-cell">
+                    <div class="u-avatar" style="background:linear-gradient(135deg,var(--purple),var(--pink))">JD</div>
+                    <span class="listing-name">Juan dela Cruz</span>
+                  </div>
+                </td>
+                <td style="color:var(--text2)">juan@barhop.ph</td>
+                <td><span class="badge badge-purple">Super Admin</span></td>
+                <td style="color:var(--text2)">All</td>
+                <td style="color:var(--muted);font-size:13px">Jan 15, 2025</td>
+                <td><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="showPage('user-new')">✏️ Edit</button><button class="btn btn-danger btn-sm" disabled style="opacity:.4;cursor:not-allowed">🗑 Del</button></div></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="user-cell">
+                    <div class="u-avatar" style="background:linear-gradient(135deg,var(--cyan),var(--purple))">MR</div>
+                    <span class="listing-name">Maria Reyes</span>
+                  </div>
+                </td>
+                <td style="color:var(--text2)">maria@barhop.ph</td>
+                <td><span class="badge badge-cyan">Admin</span></td>
+                <td style="color:var(--text2)">14</td>
+                <td style="color:var(--muted);font-size:13px">Mar 2, 2025</td>
+                <td><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="showPage('user-new')">✏️ Edit</button><button class="btn btn-danger btn-sm">🗑 Del</button></div></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="user-cell">
+                    <div class="u-avatar" style="background:linear-gradient(135deg,var(--pink),var(--gold))">CS</div>
+                    <span class="listing-name">Carlos Santos</span>
+                  </div>
+                </td>
+                <td style="color:var(--text2)">carlos@barhop.ph</td>
+                <td><span class="badge badge-cyan">Admin</span></td>
+                <td style="color:var(--text2)">7</td>
+                <td style="color:var(--muted);font-size:13px">Jun 19, 2025</td>
+                <td><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="showPage('user-new')">✏️ Edit</button><button class="btn btn-danger btn-sm">🗑 Del</button></div></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="user-cell">
+                    <div class="u-avatar" style="background:linear-gradient(135deg,var(--green),var(--cyan))">AL</div>
+                    <span class="listing-name">Ana Lim</span>
+                  </div>
+                </td>
+                <td style="color:var(--text2)">ana@barhop.ph</td>
+                <td><span class="badge badge-cyan">Admin</span></td>
+                <td style="color:var(--text2)">3</td>
+                <td style="color:var(--muted);font-size:13px">Nov 8, 2025</td>
+                <td><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="showPage('user-new')">✏️ Edit</button><button class="btn btn-danger btn-sm">🗑 Del</button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <span class="table-info">Showing 1–4 of 4 users</span>
+          <div class="pagination"><button class="page-btn active">1</button></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE: CREATE/EDIT USER                                        -->
+<!-- ============================================================ -->
+<div id="user-new-page" class="page">
+  <div class="admin-layout">
+    <aside class="sidebar" id="sidebar-user-new">
+      <div class="sidebar-logo"><div class="logo">⚡ BarHop PH</div><div class="logo-tag">Admin Portal</div></div>
+      <nav class="sidebar-nav">
+        <div class="nav-item" onclick="showPage('dashboard')"><span class="icon">📊</span>Dashboard</div>
+        <div class="nav-item" onclick="showPage('listings')"><span class="icon">🏢</span>Listings</div>
+        <div class="nav-item active" onclick="showPage('users')"><span class="icon">👥</span>Users</div>
+        <div class="nav-item"><span class="icon">📈</span>Analytics<span class="nav-ext">↗</span></div>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-avatar">SA</div>
+        <div class="user-info"><div class="user-name">Super Admin</div><div class="user-role">admin@barhop.ph</div><span class="logout-link" onclick="showPage('login')">← Logout</span></div>
+      </div>
+    </aside>
+    <main class="main">
+      <div class="top-bar">
+        <button class="btn btn-secondary btn-sm" onclick="showPage('users')">← Back</button>
+        <h2>Create New User</h2>
+        <button class="btn btn-primary">Save User</button>
+      </div>
+
+      <div class="form-card" style="max-width:640px">
+        <div class="form-section-title">👤 User Details</div>
+        <div class="form-body">
+          <div class="form-row cols-2">
+            <div class="form-group" style="margin:0">
+              <label>Full Name</label>
+              <input type="text" class="form-control" placeholder="e.g. Maria Reyes" value="">
+            </div>
+            <div class="form-group" style="margin:0">
+              <label>Email Address</label>
+              <input type="email" class="form-control" placeholder="user@barhop.ph" value="">
+            </div>
+          </div>
+          <div class="form-row cols-2" style="margin-top:16px">
+            <div class="form-group" style="margin:0">
+              <label>Password</label>
+              <div class="pw-wrap">
+                <input type="password" class="form-control" id="user-pw" placeholder="Create a strong password">
+                <button class="pw-toggle" onclick="togglePw('user-pw',this)">👁</button>
+              </div>
+            </div>
+            <div class="form-group" style="margin:0">
+              <label>Role</label>
+              <select class="form-control" id="role-select" onchange="handleRoleChange(this)">
+                <option value="admin">Admin</option>
+                <option value="super_admin">Super Admin</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Assign Listings — shown for Admin role -->
+          <div id="assign-section" style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border)">
+            <label style="display:block;color:var(--text2);font-size:13px;font-weight:600;margin-bottom:10px">Assign Listings</label>
+            <p style="color:var(--muted);font-size:12px;margin-bottom:12px">Select which listings this Admin can manage</p>
+            <div style="background:var(--overlay);border:1px solid var(--border);border-radius:8px;max-height:220px;overflow-y:auto;padding:6px">
+              <div class="cat-option"><input type="checkbox"> Valkyrie Rooftop Bar</div>
+              <div class="cat-option"><input type="checkbox" checked> Palace Pool Club</div>
+              <div class="cat-option"><input type="checkbox" checked> The Curator</div>
+              <div class="cat-option"><input type="checkbox"> Nox Bar BGC</div>
+              <div class="cat-option"><input type="checkbox"> Opus Manila</div>
+              <div class="cat-option"><input type="checkbox" checked> Saguijo Bar</div>
+              <div class="cat-option"><input type="checkbox"> XX XX Makati</div>
+              <div class="cat-option"><input type="checkbox"> Club Fuego Cebu</div>
+            </div>
+            <p style="color:var(--muted);font-size:12px;margin-top:8px">3 listings selected</p>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+// ---- Page navigation ----
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(name + '-page').classList.add('active');
+  document.querySelectorAll('#page-nav button').forEach(b => b.classList.remove('active'));
+  const labels = {login:0,dashboard:1,listings:2,'listing-new':3,users:4,'user-new':5};
+  const navBtns = document.querySelectorAll('#page-nav button');
+  if(labels[name] !== undefined) navBtns[labels[name]].classList.add('active');
+  window.scrollTo(0,0);
+  closeSidebar();
+}
+
+// ---- Sidebar (mobile) ----
+function toggleSidebar() {
+  const page = document.querySelector('.page.active');
+  const sid = page.querySelector('.sidebar');
+  const scrim = document.getElementById('scrim');
+  if(sid) { sid.classList.toggle('open'); scrim.classList.toggle('show'); }
+}
+function closeSidebar() {
+  document.querySelectorAll('.sidebar').forEach(s => s.classList.remove('open'));
+  document.getElementById('scrim').classList.remove('show');
+}
+
+// ---- Toggle password visibility ----
+function togglePw(id, btn) {
+  const el = document.getElementById(id);
+  if(el.type === 'password') { el.type='text'; btn.textContent='🙈'; }
+  else { el.type='password'; btn.textContent='👁'; }
+}
+
+// ---- Category dropdown ----
+function toggleCatMenu() {
+  document.getElementById('cat-menu').classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  if(!e.target.closest('.cat-dropdown')) {
+    document.querySelectorAll('.cat-dropdown-menu').forEach(m => m.classList.remove('open'));
+  }
+});
+function removeCat(btn) { btn.closest('.sel-badge').remove(); }
+
+// ---- Tag pills ----
+function toggleTag(el) { el.classList.toggle('selected'); }
+
+// ---- Hours toggle ----
+function toggleDay(checkbox) {
+  const row = checkbox.closest('tr');
+  const inputs = row.querySelectorAll('input[type=time]');
+  const labels = row.querySelectorAll('td:first-child');
+  if(checkbox.checked) {
+    row.classList.add('day-closed');
+    inputs.forEach(i => { i.disabled=true; i.style.opacity='.4'; });
+    labels.forEach(l => l.style.opacity='.4');
+  } else {
+    row.classList.remove('day-closed');
+    inputs.forEach(i => { i.disabled=false; i.style.opacity='1'; });
+    labels.forEach(l => l.style.opacity='1');
+  }
+}
+
+// ---- Add menu item ----
+function addMenuItem() {
+  const container = document.getElementById('menu-items');
+  const row = document.createElement('div');
+  row.className = 'menu-item-row';
+  row.innerHTML = `
+    <input type="text" class="form-control" placeholder="Item name">
+    <div class="price-input-wrap"><span class="price-prefix">₱</span><input type="text" class="form-control" placeholder="0.00"></div>
+    <input type="text" class="form-control" placeholder="Description">
+    <button class="btn btn-danger btn-sm" onclick="this.closest('.menu-item-row').remove()">✕</button>`;
+  container.appendChild(row);
+}
+
+// ---- Add event ----
+function addEvent() {
+  const container = document.getElementById('events-list');
+  const card = document.createElement('div');
+  card.className = 'event-card';
+  card.innerHTML = `
+    <div class="event-card-grid">
+      <input type="text" class="form-control" placeholder="Event title">
+      <input type="date" class="form-control">
+      <select class="form-control"><option>One-time</option><option>Weekly</option><option>Monthly</option></select>
+      <button class="btn btn-danger btn-sm" onclick="this.closest('.event-card').remove()">✕</button>
+    </div>
+    <textarea class="form-control" style="min-height:72px" placeholder="Event description..."></textarea>`;
+  container.appendChild(card);
+}
+
+// ---- Role change — show/hide assign listings ----
+function handleRoleChange(sel) {
+  const section = document.getElementById('assign-section');
+  section.style.display = sel.value === 'admin' ? 'block' : 'none';
+}
+
+// ---- Pagination buttons interactive ----
+document.addEventListener('click', function(e) {
+  if(e.target.classList.contains('page-btn') && !e.target.classList.contains('active')) {
+    const pg = e.target.closest('.pagination');
+    if(pg) { pg.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); }
+  }
+});
+
+// ---- Show login error demo ----
+document.addEventListener('DOMContentLoaded', function() {
+  // Demonstrate error message on demand in login (not by default)
+});
+</script>
+</body>
+</html>

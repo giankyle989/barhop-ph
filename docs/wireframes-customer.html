@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BarHop PH — Customer Wireframes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0A0F;--surface:#12121A;--card:#1A1A2E;--overlay:#222236;
+  --purple:#A855F7;--pink:#EC4899;--cyan:#06B6D4;
+  --text:#F8FAFC;--text2:#94A3B8;--muted:#64748B;
+  --green:#22C55E;--red:#EF4444;--gold:#F59E0B;
+  --border:#2D2D44;--border-h:#3D3D5C;
+  --r:12px;--glow:0 0 20px rgba(168,85,247,0.3);
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
+a{color:inherit;text-decoration:none}
+img{display:block}
+button{cursor:pointer;font-family:'Inter',sans-serif}
+
+/* NAV */
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;height:64px;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.4rem;background:linear-gradient(135deg,var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-right:40px}
+.nav-links{display:flex;gap:8px;flex:1}
+.nav-links a{color:var(--text2);padding:8px 14px;border-radius:8px;font-size:.9rem;font-weight:500;transition:.2s}
+.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--overlay)}
+.nav-right{display:flex;gap:8px}
+.btn{padding:8px 18px;border-radius:8px;border:none;font-size:.875rem;font-weight:600;transition:.2s;display:inline-flex;align-items:center;gap:6px}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--border-h);color:var(--text)}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff}
+.btn-primary:hover{opacity:.9;box-shadow:var(--glow)}
+.btn-sm{padding:6px 14px;font-size:.8rem}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text2)}
+.btn-outline:hover{border-color:var(--purple);color:var(--purple)}
+
+/* PAGE NAV TABS */
+.page-tabs{display:flex;gap:6px;padding:12px 24px;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;flex-wrap:nowrap}
+.page-tabs button{background:var(--overlay);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;font-size:.8rem;font-weight:500;white-space:nowrap;transition:.2s}
+.page-tabs button:hover{border-color:var(--border-h);color:var(--text)}
+.page-tabs button.active{background:linear-gradient(135deg,var(--purple),var(--pink));border-color:transparent;color:#fff}
+
+/* PAGES */
+.page{display:none}.page.active{display:block}
+
+/* HERO */
+.hero{padding:80px 24px 64px;text-align:center;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(168,85,247,.18) 0%,transparent 70%)}
+.hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:700;line-height:1.15;max-width:800px;margin:0 auto 16px}
+.hero p{color:var(--text2);font-size:1.1rem;margin-bottom:36px;max-width:520px;margin-left:auto;margin-right:auto}
+.gradient-text{background:linear-gradient(135deg,var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* SEARCH BAR */
+.search-wrap{max-width:600px;margin:0 auto;position:relative}
+.search-input{width:100%;background:var(--card);border:1px solid var(--border);border-radius:50px;padding:16px 60px 16px 24px;font-size:1rem;color:var(--text);outline:none;transition:.2s}
+.search-input::placeholder{color:var(--muted)}
+.search-input:focus{border-color:var(--purple);box-shadow:var(--glow)}
+.search-btn{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:linear-gradient(135deg,var(--purple),var(--pink));border:none;border-radius:50px;padding:10px 20px;color:#fff;font-weight:600;font-size:.875rem}
+
+/* SECTION */
+.section{padding:48px 24px;max-width:1200px;margin:0 auto}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.section-title{font-size:1.5rem;font-weight:700}
+.see-all{color:var(--purple);font-size:.875rem;font-weight:500}
+.see-all:hover{text-decoration:underline}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:.2s}
+.card:hover{border-color:var(--border-h);transform:translateY(-2px)}
+.card.featured{border-color:var(--gold);box-shadow:var(--glow),0 0 20px rgba(245,158,11,.2)}
+.card-img{width:100%;aspect-ratio:16/9;position:relative;display:flex;align-items:flex-end;padding:10px}
+.card-img.g1{background:linear-gradient(135deg,#1a0533,#2d1b69,#0d1b2a)}
+.card-img.g2{background:linear-gradient(135deg,#0d1117,#1a0533,#380d57)}
+.card-img.g3{background:linear-gradient(135deg,#0a1628,#1a0533,#2d0a4e)}
+.card-img.g4{background:linear-gradient(135deg,#0f0a1e,#2d1b69,#1a0533)}
+.card-img.g5{background:linear-gradient(135deg,#0a1628,#0d2b4e,#091428)}
+.card-img.g6{background:linear-gradient(135deg,#1a0a0a,#2d1010,#0a1628)}
+.card-body{padding:14px}
+.card-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;margin-bottom:8px}
+.card-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:50px;font-size:.72rem;font-weight:600;letter-spacing:.02em}
+.badge-purple{background:rgba(168,85,247,.15);color:var(--purple);border:1px solid rgba(168,85,247,.3)}
+.badge-gold{background:rgba(245,158,11,.15);color:var(--gold);border:1px solid rgba(245,158,11,.4)}
+.badge-green{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+.badge-red{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+.badge-cyan{background:rgba(6,182,212,.12);color:var(--cyan);border:1px solid rgba(6,182,212,.3)}
+.badge-overlay{position:absolute;top:8px;left:8px}
+.card-city{color:var(--text2);font-size:.8rem}
+
+/* FEATURED SCROLL */
+.featured-scroll{display:flex;gap:20px;overflow-x:auto;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.featured-scroll .card{min-width:280px;max-width:280px}
+
+/* CATEGORIES GRID */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.cat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px 16px;text-align:center;cursor:pointer;transition:.2s}
+.cat-card:hover{border-color:var(--purple);background:var(--overlay);transform:translateY(-2px)}
+.cat-icon{font-size:2rem;margin-bottom:10px}
+.cat-label{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.9rem}
+
+/* CITIES GRID */
+.city-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.city-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:28px 20px;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+.city-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(236,72,153,.08));opacity:0;transition:.2s}
+.city-card:hover{border-color:var(--border-h);transform:translateY(-2px)}
+.city-card:hover::before{opacity:1}
+.city-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;margin-bottom:4px}
+.city-count{color:var(--text2);font-size:.85rem}
+
+/* FOOTER */
+.footer{background:var(--surface);border-top:1px solid var(--border);padding:40px 24px 24px;margin-top:48px}
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;background:linear-gradient(135deg,var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+.footer-desc{color:var(--text2);font-size:.85rem;line-height:1.6}
+.footer-col h4{font-family:'Space Grotesk',sans-serif;font-size:.9rem;font-weight:600;margin-bottom:14px}
+.footer-col a{display:block;color:var(--text2);font-size:.85rem;margin-bottom:8px;transition:.2s}
+.footer-col a:hover{color:var(--purple)}
+.footer-bottom{max-width:1200px;margin:24px auto 0;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:.8rem;display:flex;justify-content:space-between}
+
+/* BROWSE PAGE */
+.browse-layout{display:flex;gap:24px;max-width:1200px;margin:0 auto;padding:24px}
+.filter-sidebar{width:250px;flex-shrink:0}
+.filter-sidebar h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;margin-bottom:16px}
+.filter-section{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:16px}
+.filter-section h4{font-size:.85rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.filter-select{width:100%;background:var(--overlay);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:.875rem;outline:none;margin-bottom:10px}
+.filter-select:focus{border-color:var(--purple)}
+.filter-check{display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer;font-size:.875rem;color:var(--text2)}
+.filter-check input{accent-color:var(--purple);width:15px;height:15px}
+.toggle-row{display:flex;align-items:center;justify-content:space-between}
+.toggle{position:relative;width:42px;height:24px}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:var(--overlay);border-radius:50px;border:1px solid var(--border);cursor:pointer;transition:.2s}
+.toggle-slider::before{content:'';position:absolute;width:18px;height:18px;left:2px;top:2px;background:var(--muted);border-radius:50%;transition:.2s}
+.toggle input:checked+.toggle-slider{background:rgba(34,197,94,.2);border-color:var(--green)}
+.toggle input:checked+.toggle-slider::before{transform:translateX(18px);background:var(--green)}
+.btn-apply{width:100%;background:linear-gradient(135deg,var(--purple),var(--pink));border:none;border-radius:8px;padding:12px;color:#fff;font-weight:600;font-size:.9rem;margin-top:4px}
+.browse-main{flex:1;min-width:0}
+.browse-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.browse-info{color:var(--text2);font-size:.9rem}
+.view-toggle{display:flex;gap:4px}
+.view-btn{background:var(--overlay);border:1px solid var(--border);border-radius:6px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:1.1rem;transition:.2s}
+.view-btn:hover,.view-btn.active{border-color:var(--purple);color:var(--purple);background:rgba(168,85,247,.1)}
+.listing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.listing-list{display:flex;flex-direction:column;gap:12px}
+.list-row{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;display:flex;align-items:center;gap:16px;transition:.2s}
+.list-row:hover{border-color:var(--border-h);transform:translateY(-1px)}
+.list-row.featured{border-color:var(--gold);box-shadow:var(--glow),0 0 12px rgba(245,158,11,.15)}
+.list-thumb{width:80px;height:80px;border-radius:8px;flex-shrink:0}
+.list-info{flex:1;min-width:0}
+.list-name{font-family:'Space Grotesk',sans-serif;font-weight:600;margin-bottom:6px}
+.list-meta{display:flex;gap:6px;flex-wrap:wrap}
+.list-status{margin-left:auto;flex-shrink:0}
+.pagination{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:32px}
+.page-btn{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px 14px;color:var(--text2);font-size:.875rem;transition:.2s}
+.page-btn:hover{border-color:var(--purple);color:var(--purple)}
+.page-btn.active{background:linear-gradient(135deg,var(--purple),var(--pink));border-color:transparent;color:#fff}
+.page-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* BREADCRUMBS */
+.breadcrumbs{padding:14px 24px;max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--muted)}
+.breadcrumbs span{color:var(--text2);cursor:pointer}
+.breadcrumbs span:hover{color:var(--purple)}
+.breadcrumbs .sep{color:var(--border)}
+.breadcrumbs .current{color:var(--text)}
+
+/* REGION/CITY HERO */
+.region-hero{padding:48px 24px 36px;text-align:center;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(168,85,247,.14) 0%,transparent 70%);max-width:1200px;margin:0 auto}
+.region-hero h1{font-size:2.2rem;font-weight:700;margin-bottom:8px}
+.region-hero p{color:var(--text2);font-size:1rem}
+.pill-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:24px}
+.pill{background:var(--overlay);border:1px solid var(--border);border-radius:50px;padding:7px 18px;font-size:.85rem;color:var(--text2);cursor:pointer;transition:.2s}
+.pill:hover,.pill.active{background:rgba(168,85,247,.15);border-color:var(--purple);color:var(--purple)}
+
+/* DETAIL PAGE */
+.detail-wrap{max-width:1100px;margin:0 auto;padding:0 24px 48px}
+.detail-hero{border-radius:var(--r);overflow:hidden;height:400px;background:linear-gradient(135deg,#1a0533,#2d1b69,#0d1b2a,#380d57);display:flex;align-items:center;justify-content:center;font-size:4rem;margin-bottom:16px;position:relative}
+.detail-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6) 0%,transparent 60%)}
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
+.gallery-thumb{border-radius:8px;aspect-ratio:4/3;cursor:pointer;border:2px solid var(--border);overflow:hidden;transition:.2s}
+.gallery-thumb:hover{border-color:var(--purple)}
+.gallery-thumb.g1{background:linear-gradient(135deg,#0d1117,#1a0533,#380d57)}
+.gallery-thumb.g2{background:linear-gradient(135deg,#0a1628,#1a0533,#2d0a4e)}
+.gallery-thumb.g3{background:linear-gradient(135deg,#1a0a0a,#2d1010,#0a1628)}
+.gallery-thumb.g4{background:linear-gradient(135deg,#0f0a1e,#2d1b69,#1a0533)}
+.detail-title{font-size:2.2rem;font-weight:700;margin-bottom:12px}
+.detail-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.detail-address{display:flex;align-items:center;gap:10px;color:var(--text2);font-size:.9rem;margin-bottom:18px}
+.copy-btn{background:var(--overlay);border:1px solid var(--border);border-radius:6px;padding:5px 12px;color:var(--text2);font-size:.8rem;transition:.2s}
+.copy-btn:hover{border-color:var(--purple);color:var(--purple)}
+.tags-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.tag{background:var(--overlay);border:1px solid var(--border);border-radius:50px;padding:5px 14px;font-size:.8rem;color:var(--text2)}
+.detail-grid{display:grid;grid-template-columns:2fr 1fr;gap:32px}
+.detail-section{margin-bottom:32px}
+.detail-section h2{font-size:1.2rem;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.detail-section p{color:var(--text2);line-height:1.75;margin-bottom:12px;font-size:.925rem}
+.hours-table{width:100%;border-collapse:collapse}
+.hours-table tr{border-bottom:1px solid var(--border)}
+.hours-table tr.today{background:rgba(168,85,247,.08)}
+.hours-table td{padding:10px 8px;font-size:.875rem;color:var(--text2)}
+.hours-table td:first-child{color:var(--text);font-weight:500}
+.hours-table td:last-child{text-align:right}
+.menu-table{width:100%;border-collapse:collapse}
+.menu-table tr{border-bottom:1px solid var(--border)}
+.menu-table td{padding:10px 8px;font-size:.875rem}
+.menu-table td:first-child{color:var(--text)}
+.menu-table td:last-child{text-align:right;color:var(--purple);font-weight:600}
+.menu-cat{padding:8px 8px 4px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:var(--overlay)}
+.event-card{background:var(--overlay);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;display:flex;gap:16px;align-items:flex-start}
+.event-icon{font-size:1.5rem;margin-top:2px}
+.event-title{font-weight:600;margin-bottom:4px;font-size:.925rem}
+.event-date{color:var(--text2);font-size:.82rem}
+.map-placeholder{background:var(--overlay);border:1px solid var(--border);border-radius:var(--r);height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin-bottom:20px}
+.map-placeholder span{font-size:2rem}
+.map-placeholder p{color:var(--muted);font-size:.875rem}
+.contact-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.contact-btn{display:flex;align-items:center;gap:8px;background:var(--overlay);border:1px solid var(--border);border-radius:8px;padding:10px 18px;color:var(--text);font-size:.875rem;font-weight:500;cursor:pointer;transition:.2s}
+.contact-btn:hover{border-color:var(--purple);color:var(--purple)}
+.social-row{display:flex;gap:10px;margin-bottom:20px}
+.social-btn{background:var(--overlay);border:1px solid var(--border);border-radius:8px;padding:10px 16px;color:var(--text2);font-size:.875rem;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:6px}
+.social-btn:hover{border-color:var(--border-h);color:var(--text)}
+.claim-link{color:var(--muted);font-size:.8rem;display:block;margin-bottom:8px}
+.claim-link:hover{color:var(--purple)}
+.powered{color:var(--muted);font-size:.75rem}
+.detail-sidebar{}
+
+/* NEARBY PAGE */
+.nearby-hero{padding:48px 24px 32px;max-width:1200px;margin:0 auto}
+.nearby-hero h1{font-size:2rem;font-weight:700;margin-bottom:8px}
+.nearby-hero p{color:var(--text2)}
+.geo-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:32px;text-align:center;margin:24px 0;max-width:480px}
+.geo-icon{font-size:2.5rem;margin-bottom:12px}
+.geo-card h3{font-family:'Space Grotesk',sans-serif;font-weight:600;margin-bottom:8px}
+.geo-card p{color:var(--text2);font-size:.875rem;margin-bottom:20px}
+.nearby-card-wrap{position:relative}
+.distance-badge{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);border-radius:50px;padding:3px 10px;font-size:.75rem;color:var(--cyan);font-weight:500}
+
+/* GRID 2 COL */
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+
+@media(max-width:1024px){
+  .cat-grid{grid-template-columns:repeat(4,1fr)}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .listing-grid{grid-template-columns:repeat(2,1fr)}
+  .detail-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .nav{padding:0 16px}
+  .nav-links{display:none}
+  .hero{padding:48px 16px 40px}
+  .section{padding:32px 16px}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .city-grid{grid-template-columns:repeat(2,1fr)}
+  .browse-layout{flex-direction:column;padding:16px}
+  .filter-sidebar{width:100%}
+  .listing-grid{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr;gap:20px}
+  .detail-grid{grid-template-columns:1fr}
+  .gallery{grid-template-columns:repeat(4,1fr)}
+  .detail-hero{height:220px}
+  .detail-title{font-size:1.5rem}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .breadcrumbs{padding:10px 16px}
+  .detail-wrap{padding:0 16px 32px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">BarHop PH</div>
+  <div class="nav-links">
+    <a href="#" class="active" onclick="showPage('home',this)">Home</a>
+    <a href="#" onclick="showPage('browse',this)">Browse</a>
+    <a href="#" onclick="showPage('nearby',this)">Nearby</a>
+  </div>
+  <div class="nav-right">
+    <button class="btn btn-ghost btn-sm">Log In</button>
+    <button class="btn btn-primary btn-sm">Sign Up</button>
+  </div>
+</nav>
+
+<!-- PAGE TABS -->
+<div class="page-tabs">
+  <button class="active" onclick="switchTab('home',this)">1. Home</button>
+  <button onclick="switchTab('browse',this)">2. Browse Listings</button>
+  <button onclick="switchTab('region',this)">3. Region Page (NCR)</button>
+  <button onclick="switchTab('city',this)">4. City Page (Makati)</button>
+  <button onclick="switchTab('detail',this)">5. Listing Detail</button>
+  <button onclick="switchTab('nearby',this)">6. Nearby</button>
+</div>
+
+<!-- ==================== PAGE 1: HOME ==================== -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Discover the Best<br><span class="gradient-text">Bars & Clubs</span><br>in the Philippines</h1>
+    <p>Find the perfect spot for every night out — from craft cocktail bars to high-energy nightclubs.</p>
+    <div class="search-wrap">
+      <input class="search-input" type="text" placeholder="Search bars, clubs, lounges...">
+      <button class="search-btn">Search</button>
+    </div>
+  </section>
+
+  <!-- FEATURED VENUES -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title">⭐ Featured Venues</h2>
+      <a href="#" class="see-all">See all →</a>
+    </div>
+    <div class="featured-scroll">
+      <div class="card featured">
+        <div class="card-img g2">
+          <div class="badge badge-gold badge-overlay">★ Featured</div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Raven Manila</div>
+          <div class="card-meta">
+            <span class="badge badge-purple">Night Club</span>
+            <span class="badge badge-green">● Open</span>
+          </div>
+          <div class="card-city" style="margin-top:6px">📍 Taguig, Metro Manila</div>
+        </div>
+      </div>
+      <div class="card featured">
+        <div class="card-img g4">
+          <div class="badge badge-gold badge-overlay">★ Featured</div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Xylo at The Palace</div>
+          <div class="card-meta">
+            <span class="badge badge-purple">Night Club</span>
+            <span class="badge badge-green">● Open</span>
+          </div>
+          <div class="card-city" style="margin-top:6px">📍 Taguig, Metro Manila</div>
+        </div>
+      </div>
+      <div class="card featured">
+        <div class="card-img g1">
+          <div class="badge badge-gold badge-overlay">★ Featured</div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">The Pool Bar</div>
+          <div class="card-meta">
+            <span class="badge badge-purple">Cocktail Bar</span>
+            <span class="badge badge-green">● Open</span>
+          </div>
+          <div class="card-city" style="margin-top:6px">📍 Makati, Metro Manila</div>
+        </div>
+      </div>
+      <div class="card featured">
+        <div class="card-img g3">
+          <div class="badge badge-gold badge-overlay">★ Featured</div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Neon Garden Cebu</div>
+          <div class="card-meta">
+            <span class="badge badge-purple">Rooftop Bar</span>
+            <span class="badge badge-green">● Open</span>
+          </div>
+          <div class="card-city" style="margin-top:6px">📍 Cebu City</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div style="background:var(--surface);padding:1px 0">
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title">Browse by Category</h2>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card"><div class="cat-icon">🏈</div><div class="cat-label">Sports Bar</div></div>
+      <div class="cat-card"><div class="cat-icon">🎉</div><div class="cat-label">Night Club</div></div>
+      <div class="cat-card"><div class="cat-icon">🍸</div><div class="cat-label">Cocktail Bar</div></div>
+      <div class="cat-card"><div class="cat-icon">🎤</div><div class="cat-label">KTV</div></div>
+      <div class="cat-card"><div class="cat-icon">🌆</div><div class="cat-label">Rooftop Bar</div></div>
+      <div class="cat-card"><div class="cat-icon">🛋️</div><div class="cat-label">Lounge</div></div>
+      <div class="cat-card"><div class="cat-icon">🍺</div><div class="cat-label">Pub</div></div>
+      <div class="cat-card"><div class="cat-icon">🎸</div><div class="cat-label">Live Music Bar</div></div>
+    </div>
+  </div>
+  </div>
+
+  <!-- CITIES -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title">Popular Cities</h2>
+      <a href="#" class="see-all">View all →</a>
+    </div>
+    <div class="city-grid">
+      <div class="city-card"><div class="city-name">Makati</div><div class="city-count">48 listings</div></div>
+      <div class="city-card"><div class="city-name">BGC / Taguig</div><div class="city-count">36 listings</div></div>
+      <div class="city-card"><div class="city-name">Quezon City</div><div class="city-count">29 listings</div></div>
+      <div class="city-card"><div class="city-name">Cebu City</div><div class="city-count">22 listings</div></div>
+      <div class="city-card"><div class="city-name">Manila</div><div class="city-count">19 listings</div></div>
+      <div class="city-card"><div class="city-name">Davao</div><div class="city-count">14 listings</div></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">BarHop PH</div>
+        <p class="footer-desc">The Philippines' most complete directory for bars, clubs, and nightlife venues. Find your next favorite spot.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="#">Browse Listings</a>
+        <a href="#">Nearby Bars</a>
+        <a href="#">Categories</a>
+        <a href="#">Cities</a>
+      </div>
+      <div class="footer-col">
+        <h4>Business</h4>
+        <a href="#">List Your Venue</a>
+        <a href="#">Claim Listing</a>
+        <a href="#">Advertising</a>
+        <a href="#">Pricing</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 BarHop PH. All rights reserved.</span>
+      <span>Made with ♥ in the Philippines</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== PAGE 2: BROWSE ==================== -->
+<div id="page-browse" class="page">
+  <div style="background:var(--surface);padding:12px 0">
+    <div class="breadcrumbs">
+      <span>Home</span><span class="sep">/</span><span class="current">Listings</span>
+    </div>
+  </div>
+  <div style="padding:20px 24px;background:var(--surface);border-bottom:1px solid var(--border)">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="search-wrap" style="max-width:500px;margin:0">
+        <input class="search-input" type="text" placeholder="Search bars, clubs, lounges..." style="border-radius:8px;padding:12px 50px 12px 18px">
+        <button class="search-btn" style="border-radius:6px;padding:8px 16px">🔍</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="browse-layout">
+    <!-- SIDEBAR -->
+    <aside class="filter-sidebar">
+      <h3>Filters</h3>
+      <div class="filter-section">
+        <h4>Location</h4>
+        <select class="filter-select"><option>All Regions</option><option selected>NCR</option><option>Region III</option><option>Region VII</option></select>
+        <select class="filter-select"><option>All Cities</option><option>Makati</option><option>Taguig</option><option>Quezon City</option><option>Manila</option></select>
+      </div>
+      <div class="filter-section">
+        <h4>Category</h4>
+        <label class="filter-check"><input type="checkbox" checked> Night Club</label>
+        <label class="filter-check"><input type="checkbox" checked> Cocktail Bar</label>
+        <label class="filter-check"><input type="checkbox"> Sports Bar</label>
+        <label class="filter-check"><input type="checkbox"> KTV</label>
+        <label class="filter-check"><input type="checkbox"> Rooftop Bar</label>
+        <label class="filter-check"><input type="checkbox"> Pub</label>
+        <label class="filter-check"><input type="checkbox"> Lounge</label>
+        <label class="filter-check"><input type="checkbox"> Live Music Bar</label>
+      </div>
+      <div class="filter-section">
+        <h4>Availability</h4>
+        <div class="toggle-row">
+          <span style="font-size:.875rem">Open Now</span>
+          <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+      <button class="btn-apply">Apply Filters</button>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="browse-main">
+      <div class="browse-top">
+        <span class="browse-info">Showing <strong style="color:var(--text)">6</strong> of 128 venues</span>
+        <div style="display:flex;gap:10px;align-items:center">
+          <div class="view-toggle">
+            <button class="view-btn active" id="grid-btn" onclick="setView('grid')" title="Grid view">⊞</button>
+            <button class="view-btn" id="list-btn" onclick="setView('list')" title="List view">☰</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRID VIEW -->
+      <div id="grid-view" class="listing-grid">
+        <div class="card" onclick="switchTab('detail',null)">
+          <div class="card-img g1"></div>
+          <div class="card-body">
+            <div class="card-name">The Pool Bar</div>
+            <div class="card-meta"><span class="badge badge-purple">Cocktail Bar</span><span class="badge badge-green">● Open</span></div>
+            <div class="card-city" style="margin-top:6px">📍 Makati</div>
+          </div>
+        </div>
+        <div class="card featured" onclick="switchTab('detail',null)">
+          <div class="card-img g2"><div class="badge badge-gold badge-overlay">★ Featured</div></div>
+          <div class="card-body">
+            <div class="card-name">Raven Manila</div>
+            <div class="card-meta"><span class="badge badge-purple">Night Club</span><span class="badge badge-green">● Open</span></div>
+            <div class="card-city" style="margin-top:6px">📍 Taguig</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img g3"></div>
+          <div class="card-body">
+            <div class="card-name">Handlebar</div>
+            <div class="card-meta"><span class="badge badge-purple">Pub</span><span class="badge badge-red">● Closed</span></div>
+            <div class="card-city" style="margin-top:6px">📍 Makati</div>
+          </div>
+        </div>
+        <div class="card featured">
+          <div class="card-img g4"><div class="badge badge-gold badge-overlay">★ Featured</div></div>
+          <div class="card-body">
+            <div class="card-name">Xylo at The Palace</div>
+            <div class="card-meta"><span class="badge badge-purple">Night Club</span><span class="badge badge-green">● Open</span></div>
+            <div class="card-city" style="margin-top:6px">📍 Taguig</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img g5"></div>
+          <div class="card-body">
+            <div class="card-name">Bucky's</div>
+            <div class="card-meta"><span class="badge badge-purple">Sports Bar</span><span class="badge badge-green">● Open</span></div>
+            <div class="card-city" style="margin-top:6px">📍 Quezon City</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img g6"></div>
+          <div class="card-body">
+            <div class="card-name">El Chupacabra</div>
+            <div class="card-meta"><span class="badge badge-purple">Pub</span><span class="badge badge-green">● Open</span></div>
+            <div class="card-city" style="margin-top:6px">📍 Makati</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIST VIEW -->
+      <div id="list-view" class="listing-list" style="display:none">
+        <div class="list-row" onclick="switchTab('detail',null)">
+          <div class="list-thumb g1" style="border-radius:8px"></div>
+          <div class="list-info">
+            <div class="list-name">The Pool Bar</div>
+            <div class="list-meta"><span class="badge badge-purple">Cocktail Bar</span><span class="card-city" style="font-size:.8rem">📍 Makati</span></div>
+          </div>
+          <div class="list-status"><span class="badge badge-green">● Open</span></div>
+        </div>
+        <div class="list-row featured">
+          <div class="list-thumb g2" style="border-radius:8px"></div>
+          <div class="list-info">
+            <div class="list-name">Raven Manila</div>
+            <div class="list-meta"><span class="badge badge-purple">Night Club</span><span class="badge badge-gold">★ Featured</span><span class="card-city" style="font-size:.8rem">📍 Taguig</span></div>
+          </div>
+          <div class="list-status"><span class="badge badge-green">● Open</span></div>
+        </div>
+        <div class="list-row">
+          <div class="list-thumb g3" style="border-radius:8px"></div>
+          <div class="list-info">
+            <div class="list-name">Handlebar</div>
+            <div class="list-meta"><span class="badge badge-purple">Pub</span><span class="card-city" style="font-size:.8rem">📍 Makati</span></div>
+          </div>
+          <div class="list-status"><span class="badge badge-red">● Closed</span></div>
+        </div>
+        <div class="list-row featured">
+          <div class="list-thumb g4" style="border-radius:8px"></div>
+          <div class="list-info">
+            <div class="list-name">Xylo at The Palace</div>
+            <div class="list-meta"><span class="badge badge-purple">Night Club</span><span class="badge badge-gold">★ Featured</span><span class="card-city" style="font-size:.8rem">📍 Taguig</span></div>
+          </div>
+          <div class="list-status"><span class="badge badge-green">● Open</span></div>
+        </div>
+        <div class="list-row">
+          <div class="list-thumb g5" style="border-radius:8px"></div>
+          <div class="list-info">
+            <div class="list-name">Bucky's</div>
+            <div class="list-meta"><span class="badge badge-purple">Sports Bar</span><span class="card-city" style="font-size:.8rem">📍 Quezon City</span></div>
+          </div>
+          <div class="list-status"><span class="badge badge-green">● Open</span></div>
+        </div>
+        <div class="list-row">
+          <div class="list-thumb g6" style="border-radius:8px"></div>
+          <div class="list-info">
+            <div class="list-name">El Chupacabra</div>
+            <div class="list-meta"><span class="badge badge-purple">Pub</span><span class="card-city" style="font-size:.8rem">📍 Makati</span></div>
+          </div>
+          <div class="list-status"><span class="badge badge-green">● Open</span></div>
+        </div>
+      </div>
+
+      <!-- PAGINATION -->
+      <div class="pagination">
+        <button class="page-btn" disabled>← Previous</button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <span style="color:var(--muted);padding:0 4px">...</span>
+        <button class="page-btn">10</button>
+        <button class="page-btn">Next →</button>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ==================== PAGE 3: REGION ==================== -->
+<div id="page-region" class="page">
+  <div style="background:var(--surface);padding:12px 0;border-bottom:1px solid var(--border)">
+    <div class="breadcrumbs">
+      <span>Home</span><span class="sep">/</span><span class="current">NCR</span>
+    </div>
+  </div>
+  <div class="region-hero">
+    <h1>Bars &amp; Clubs in <span class="gradient-text">NCR</span></h1>
+    <p>National Capital Region — 132 listings across 6 cities</p>
+    <div class="pill-row">
+      <span class="pill active">Makati</span>
+      <span class="pill">Taguig</span>
+      <span class="pill">Quezon City</span>
+      <span class="pill">Manila</span>
+      <span class="pill">Pasig</span>
+      <span class="pill">Mandaluyong</span>
+    </div>
+  </div>
+  <div class="section">
+    <div class="grid-3">
+      <div class="card"><div class="card-img g1"></div><div class="card-body"><div class="card-name">The Pool Bar</div><div class="card-meta"><span class="badge badge-purple">Cocktail Bar</span><span class="badge badge-green">● Open</span></div><div class="card-city" style="margin-top:6px">📍 Makati</div></div></div>
+      <div class="card featured"><div class="card-img g2"><div class="badge badge-gold badge-overlay">★ Featured</div></div><div class="card-body"><div class="card-name">Raven Manila</div><div class="card-meta"><span class="badge badge-purple">Night Club</span><span class="badge badge-green">● Open</span></div><div class="card-city" style="margin-top:6px">📍 Taguig</div></div></div>
+      <div class="card"><div class="card-img g3"></div><div class="card-body"><div class="card-name">Handlebar</div><div class="card-meta"><span class="badge badge-purple">Pub</span><span class="badge badge-red">● Closed</span></div><div class="card-city" style="margin-top:6px">📍 Makati</div></div></div>
+      <div class="card featured"><div class="card-img g4"><div class="badge badge-gold badge-overlay">★ Featured</div></div><div class="card-body"><div class="card-name">Xylo at The Palace</div><div class="card-meta"><span class="badge badge-purple">Night Club</span><span class="badge badge-green">● Open</span></div><div class="card-city" style="margin-top:6px">📍 Taguig</div></div></div>
+      <div class="card"><div class="card-img g5"></div><div class="card-body"><div class="card-name">Bucky's</div><div class="card-meta"><span class="badge badge-purple">Sports Bar</span><span class="badge badge-green">● Open</span></div><div class="card-city" style="margin-top:6px">📍 Quezon City</div></div></div>
+      <div class="card"><div class="card-img g6"></div><div class="card-body"><div class="card-name">El Chupacabra</div><div class="card-meta"><span class="badge badge-purple">Pub</span><span class="badge badge-green">● Open</span></div><div class="card-city" style="margin-top:6px">📍 Makati</div></div></div>
+    </div>
+    <div class="pagination" style="margin-top:28px">
+      <button class="page-btn" disabled>← Previous</button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <span style="color:var(--muted);padding:0 4px">...</span>
+      <button class="page-btn">11</button>
+      <button class="page-btn">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 4: CITY ==================== -->
+<div id="page-city" class="page">
+  <div style="background:var(--surface);padding:12px 0;border-bottom:1px solid var(--border)">
+    <div class="breadcrumbs">
+      <span>Home</span><span class="sep">/</span><span>NCR</span><span class="sep">/</span><span class="current">Makati</span>
+    </div>
+  </div>
+  <div class="region-hero">
+    <h1>Bars &amp; Clubs in <span class="gradient-text">Makati</span></h1>
+    <p>48 listings · Metro Manila's premier nightlife district</p>
+    <div class="pill-row">
+      <span class="pill active">All</span>
+      <span class="pill">Cocktail Bar</span>
+      <span class="pill">Night Club</span>
+      <span class="pill">Pub</span>
+      <span class="pill">Lounge</span>
+      <span class="pill">Rooftop Bar</span>
+    </div>
+  </div>
+  <div class="section">
+    <div class="grid-2" style="max-width:800px">
+      <div class="card" onclick="switchTab('detail',null)"><div class="card-img g1"></div><div class="card-body"><div class="card-name">The Pool Bar</div><div class="card-meta"><span class="badge badge-purple">Cocktail Bar</span><span class="badge badge-green">● Open</span></div><div class="card-city" style="margin-top:6px">📍 Legaspi Village, Makati</div></div></div>
+      <div class="card"><div class="card-img g3"></div><div class="card-body"><div class="card-name">Handlebar</div><div class="card-meta"><span class="badge badge-purple">Pub</span><span class="badge badge-red">● Closed</span></div><div class="card-city" style="margin-top:6px">📍 Poblacion, Makati</div></div></div>
+      <div class="card"><div class="card-img g6"></div><div class="card-body"><div class="card-name">El Chupacabra</div><div class="card-meta"><span class="badge badge-purple">Pub</span><span class="badge badge-green">● Open</span></div><div class="card-city" style="margin-top:6px">📍 Poblacion, Makati</div></div></div>
+      <div class="card"><div class="card-img g5"></div><div class="card-body"><div class="card-name">Polilya</div><div class="card-meta"><span class="badge badge-purple">Cocktail Bar</span><span class="badge badge-green">● Open</span></div><div class="card-city" style="margin-top:6px">📍 Poblacion, Makati</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 5: DETAIL ==================== -->
+<div id="page-detail" class="page">
+  <div style="background:var(--surface);padding:12px 0;border-bottom:1px solid var(--border)">
+    <div class="breadcrumbs">
+      <span>Home</span><span class="sep">/</span><span>NCR</span><span class="sep">/</span><span>Makati</span><span class="sep">/</span><span class="current">The Pool Bar</span>
+    </div>
+  </div>
+
+  <div class="detail-wrap" style="padding-top:28px">
+    <!-- HERO IMAGE -->
+    <div class="detail-hero">
+      <div class="detail-hero-overlay"></div>
+      <span style="font-size:3.5rem;position:relative;z-index:1">🍸</span>
+    </div>
+    <!-- GALLERY -->
+    <div class="gallery">
+      <div class="gallery-thumb g1"></div>
+      <div class="gallery-thumb g2"></div>
+      <div class="gallery-thumb g3"></div>
+      <div class="gallery-thumb g4"></div>
+    </div>
+
+    <div class="detail-grid">
+      <!-- MAIN CONTENT -->
+      <div>
+        <h1 class="detail-title">The Pool Bar</h1>
+        <div class="detail-badges">
+          <span class="badge badge-purple">Cocktail Bar</span>
+          <span class="badge badge-purple">Lounge</span>
+          <span class="badge badge-gold">★ Featured</span>
+          <span class="badge badge-green">● Open Now</span>
+        </div>
+        <div class="detail-address">
+          <span>📍 2F Electra House, Esteban St., Legaspi Village, Makati City, Metro Manila</span>
+          <button class="copy-btn">📋 Copy Address</button>
+        </div>
+        <div class="tags-row">
+          <span class="tag">🌿 Outdoor Seating</span>
+          <span class="tag">🍹 Cocktail Menu</span>
+          <span class="tag">🎵 Live Music</span>
+          <span class="tag">🅿️ Parking Available</span>
+          <span class="tag">📶 Wi-Fi Available</span>
+          <span class="tag">💳 Cards Accepted</span>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="detail-section">
+          <h2>About The Pool Bar</h2>
+          <p>The Pool Bar is Makati's beloved open-air cocktail lounge perched above the buzzing streets of Legaspi Village. With its signature pool table, curated craft cocktail menu, and laid-back atmosphere, it has become a staple of the Makati bar scene since opening its doors in 2014.</p>
+          <p>Whether you're unwinding after a long workday with one of their classic margaritas or catching live acoustic sets on weekend evenings, The Pool Bar offers a refreshing escape from the city's hustle. The kitchen serves up an impressive selection of pulutan and bar bites designed to pair perfectly with your drinks.</p>
+        </div>
+
+        <!-- HOURS -->
+        <div class="detail-section">
+          <h2>Opening Hours</h2>
+          <table class="hours-table">
+            <tr><td>Monday</td><td>5:00 PM – 2:00 AM</td></tr>
+            <tr><td>Tuesday</td><td>5:00 PM – 2:00 AM</td></tr>
+            <tr><td>Wednesday</td><td>5:00 PM – 2:00 AM</td></tr>
+            <tr class="today"><td><strong>Thursday</strong> <span class="badge badge-green" style="font-size:.7rem;padding:2px 8px">Open Now</span></td><td><strong>5:00 PM – 3:00 AM</strong></td></tr>
+            <tr><td>Friday</td><td>5:00 PM – 4:00 AM</td></tr>
+            <tr><td>Saturday</td><td>4:00 PM – 4:00 AM</td></tr>
+            <tr><td>Sunday</td><td>4:00 PM – 2:00 AM</td></tr>
+          </table>
+        </div>
+
+        <!-- MENU -->
+        <div class="detail-section">
+          <h2>Menu Highlights</h2>
+          <table class="menu-table">
+            <tr><td colspan="2" class="menu-cat">Beers</td></tr>
+            <tr><td>San Miguel Pale Pilsen</td><td>₱85</td></tr>
+            <tr><td>San Miguel Light</td><td>₱85</td></tr>
+            <tr><td>Craft Pale Ale (Local)</td><td>₱180</td></tr>
+            <tr><td colspan="2" class="menu-cat">Cocktails</td></tr>
+            <tr><td>Margarita</td><td>₱280</td></tr>
+            <tr><td>Mojito</td><td>₱260</td></tr>
+            <tr><td>Negroni</td><td>₱310</td></tr>
+            <tr><td>Espresso Martini</td><td>₱320</td></tr>
+            <tr><td colspan="2" class="menu-cat">Pulutan &amp; Bites</td></tr>
+            <tr><td>Pulutan Platter</td><td>₱350</td></tr>
+            <tr><td>Buffalo Wings (6 pcs)</td><td>₱290</td></tr>
+            <tr><td>Sisig Nachos</td><td>₱320</td></tr>
+            <tr><td>Crispy Calamares</td><td>₱240</td></tr>
+          </table>
+        </div>
+
+        <!-- EVENTS -->
+        <div class="detail-section">
+          <h2>Upcoming Events</h2>
+          <div class="event-card">
+            <div class="event-icon">💃</div>
+            <div>
+              <div class="event-title">Ladies Night</div>
+              <div class="event-date">📅 Every Wednesday · 8:00 PM onwards · Free entry for ladies</div>
+              <div style="margin-top:6px;font-size:.82rem;color:var(--text2)">Enjoy free welcome drinks and special cocktail promos all night long.</div>
+            </div>
+          </div>
+          <div class="event-card">
+            <div class="event-icon">🎧</div>
+            <div>
+              <div class="event-title">DJ Set by DJ Nix</div>
+              <div class="event-date">📅 March 25, 2026 · 10:00 PM – 3:00 AM · ₱300 cover charge</div>
+              <div style="margin-top:6px;font-size:.82rem;color:var(--text2)">One of Manila's hottest DJs takes over the decks for an unforgettable night of house and R&B.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="detail-sidebar">
+        <!-- MAP -->
+        <div class="detail-section">
+          <h2>Location</h2>
+          <div class="map-placeholder">
+            <span>📍</span>
+            <p>Google Map</p>
+            <p style="font-size:.75rem;color:var(--muted)">Legaspi Village, Makati City</p>
+          </div>
+          <p class="powered">Powered by Google</p>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="detail-section">
+          <h2>Contact</h2>
+          <div class="contact-row">
+            <button class="contact-btn">📞 Call</button>
+            <button class="contact-btn">💬 WhatsApp</button>
+          </div>
+          <div class="contact-row">
+            <button class="contact-btn">✉️ Email</button>
+          </div>
+          <div class="social-row">
+            <button class="social-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              Facebook
+            </button>
+            <button class="social-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              Instagram
+            </button>
+          </div>
+          <a href="#" class="claim-link">🏢 Claim this listing</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 6: NEARBY ==================== -->
+<div id="page-nearby" class="page">
+  <div class="nearby-hero">
+    <h1>Bars &amp; Clubs <span class="gradient-text">Near You</span></h1>
+    <p>Discover venues within walking distance, sorted by proximity</p>
+
+    <div class="geo-card" style="margin:24px auto">
+      <div class="geo-icon">📍</div>
+      <h3>Allow Location Access</h3>
+      <p>Enable location services to find bars and clubs near you, sorted by distance. We never store your precise location.</p>
+      <button class="btn btn-primary" style="margin:0 auto">🗺️ Enable Location</button>
+    </div>
+
+    <p style="color:var(--muted);font-size:.8rem;margin-top:8px;text-align:center">Or browse based on estimated location: <a href="#" style="color:var(--purple)">Makati City</a></p>
+  </div>
+
+  <div class="section" style="padding-top:8px">
+    <div class="section-header">
+      <h2 class="section-title">Nearby Venues</h2>
+      <span style="color:var(--text2);font-size:.85rem">Sorted by distance</span>
+    </div>
+    <div class="grid-3">
+      <div class="nearby-card-wrap">
+        <div class="card"><div class="card-img g1"></div><div class="card-body"><div class="card-name">The Pool Bar</div><div class="card-meta"><span class="badge badge-purple">Cocktail Bar</span><span class="badge badge-green">● Open</span></div><div class="card-city" style="margin-top:6px">📍 Makati</div></div></div>
+        <div class="distance-badge">0.3 km away</div>
+      </div>
+      <div class="nearby-card-wrap">
+        <div class="card"><div class="card-img g6"></div><div class="card-body"><div class="card-name">El Chupacabra</div><div class="card-meta"><span class="badge badge-purple">Pub</span><span class="badge badge-green">● Open</span></div><div class="card-city" style="margin-top:6px">📍 Makati</div></div></div>
+        <div class="distance-badge">0.8 km away</div>
+      </div>
+      <div class="nearby-card-wrap">
+        <div class="card"><div class="card-img g3"></div><div class="card-body"><div class="card-name">Handlebar</div><div class="card-meta"><span class="badge badge-purple">Pub</span><span class="badge badge-red">● Closed</span></div><div class="card-city" style="margin-top:6px">📍 Makati</div></div></div>
+        <div class="distance-badge">1.1 km away</div>
+      </div>
+      <div class="nearby-card-wrap">
+        <div class="card featured"><div class="card-img g2"><div class="badge badge-gold badge-overlay">★ Featured</div></div><div class="card-body"><div class="card-name">Raven Manila</div><div class="card-meta"><span class="badge badge-purple">Night Club</span><span class="badge badge-green">● Open</span></div><div class="card-city" style="margin-top:6px">📍 Taguig</div></div></div>
+        <div class="distance-badge">2.4 km away</div>
+      </div>
+      <div class="nearby-card-wrap">
+        <div class="card featured"><div class="card-img g4"><div class="badge badge-gold badge-overlay">★ Featured</div></div><div class="card-body"><div class="card-name">Xylo at The Palace</div><div class="card-meta"><span class="badge badge-purple">Night Club</span><span class="badge badge-green">● Open</span></div><div class="card-city" style="margin-top:6px">📍 Taguig</div></div></div>
+        <div class="distance-badge">2.9 km away</div>
+      </div>
+      <div class="nearby-card-wrap">
+        <div class="card"><div class="card-img g5"></div><div class="card-body"><div class="card-name">Bucky's</div><div class="card-meta"><span class="badge badge-purple">Sports Bar</span><span class="badge badge-green">● Open</span></div><div class="card-city" style="margin-top:6px">📍 Quezon City</div></div></div>
+        <div class="distance-badge">8.7 km away</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(page, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.page-tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  if (btn) btn.classList.add('active');
+  else {
+    const tabs = document.querySelectorAll('.page-tabs button');
+    const map = {home:0,browse:1,region:2,city:3,detail:4,nearby:5};
+    if (map[page] !== undefined) tabs[map[page]].classList.add('active');
+  }
+  window.scrollTo(0,0);
+}
+
+function showPage(page, link) {
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  if (link) link.classList.add('active');
+  const tabMap = {home:'home',browse:'browse',nearby:'nearby'};
+  if (tabMap[page]) switchTab(tabMap[page], null);
+}
+
+function setView(view) {
+  const grid = document.getElementById('grid-view');
+  const list = document.getElementById('list-view');
+  const gBtn = document.getElementById('grid-btn');
+  const lBtn = document.getElementById('list-btn');
+  if (view === 'grid') {
+    grid.style.display = 'grid';
+    list.style.display = 'none';
+    gBtn.classList.add('active');
+    lBtn.classList.remove('active');
+  } else {
+    grid.style.display = 'none';
+    list.style.display = 'flex';
+    lBtn.classList.add('active');
+    gBtn.classList.remove('active');
+  }
+}
+
+// Copy address button
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy Address', 1500);
+  });
+});
+
+// Category + city cards clickable
+document.querySelectorAll('.cat-card,.city-card').forEach(card => {
+  card.addEventListener('click', () => switchTab('browse', document.querySelectorAll('.page-tabs button')[1]));
+});
+
+// Pill active state
+document.querySelectorAll('.pill').forEach(pill => {
+  pill.addEventListener('click', function() {
+    this.closest('.pill-row').querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
