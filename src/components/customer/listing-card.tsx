@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MapPin, Clock } from "lucide-react";
 import { Card, CardContent, Badge } from "@/components/ui";
 import { OpenClosedBadge } from "./open-closed-badge";
+import { FeaturedBadge } from "./featured-badge";
 import {
   buildListingUrl,
   getPrimaryCategory,
@@ -63,6 +64,7 @@ export function ListingCard({ listing, variant = "grid" }: ListingCardProps) {
             ) : (
               <ImagePlaceholder className="absolute inset-0" />
             )}
+            {isPromoted && <FeaturedBadge />}
           </div>
 
           {/* Content — grows to fill remaining space */}
@@ -116,6 +118,7 @@ export function ListingCard({ listing, variant = "grid" }: ListingCardProps) {
         ) : (
           <ImagePlaceholder className="absolute inset-0" />
         )}
+        {isPromoted && <FeaturedBadge />}
       </div>
 
       {/* Content */}
