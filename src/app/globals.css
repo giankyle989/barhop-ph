@@ -13,7 +13,9 @@
 
   --color-content: #F8FAFC;
   --color-content-secondary: #94A3B8;
-  --color-content-muted: #64748B;
+  /* Lightened from #64748B — old value failed WCAG AA (4.5:1) on card background (#1A1A2E).
+     #78859B achieves ~4.6:1 on #1A1A2E and ~5.6:1 on #0A0A0F, passing both surfaces. */
+  --color-content-muted: #78859B;
 
   --color-status-open: #22C55E;
   --color-status-closed: #EF4444;

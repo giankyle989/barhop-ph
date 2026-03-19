@@ -92,14 +92,19 @@ export function ListingContact({
         />
         <div className="flex-1 min-w-0">
           <p className="text-sm text-content-secondary leading-snug">{address}</p>
+          {/* aria-live belongs on a sibling element, not the interactive element itself */}
           <button
             onClick={handleCopyAddress}
             className="mt-1 inline-flex items-center gap-1 text-xs text-content-muted hover:text-neon-purple transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-purple rounded"
-            aria-live="polite"
+            aria-label={copied ? "Address copied to clipboard" : "Copy address to clipboard"}
           >
             <Copy size={11} aria-hidden="true" />
-            {copied ? "Copied!" : "Copy address"}
+            <span aria-hidden="true">{copied ? "Copied!" : "Copy address"}</span>
           </button>
+          {/* Screen reader announcement for copy confirmation */}
+          <span className="sr-only" aria-live="polite" aria-atomic="true">
+            {copied ? "Address copied to clipboard" : ""}
+          </span>
         </div>
       </div>
 

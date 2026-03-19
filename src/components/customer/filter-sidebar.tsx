@@ -33,6 +33,8 @@ export function FilterSidebar({ className = "" }: FilterSidebarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const drawerRef = useRef<HTMLDivElement>(null);
+  // Track the trigger button so focus returns to it on drawer close
+  const triggerButtonRef = useRef<HTMLButtonElement>(null);
 
   // Mobile drawer state
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -124,14 +126,16 @@ export function FilterSidebar({ className = "" }: FilterSidebarProps) {
     return () => document.removeEventListener("keydown", handleKey);
   }, [drawerOpen]);
 
-  // Trap focus and prevent body scroll when drawer is open
+  // Prevent body scroll and manage focus when drawer opens/closes
   useEffect(() => {
     if (drawerOpen) {
       document.body.style.overflow = "hidden";
-      // Move focus to the drawer
+      // Move focus into the drawer panel
       drawerRef.current?.focus();
     } else {
       document.body.style.overflow = "";
+      // Return focus to the trigger button that opened the drawer
+      triggerButtonRef.current?.focus();
     }
     return () => {
       document.body.style.overflow = "";
@@ -224,6 +228,7 @@ export function FilterSidebar({ className = "" }: FilterSidebarProps) {
       {/* Mobile: Filters trigger button (shown below md) */}
       <div className="md:hidden">
         <Button
+          ref={triggerButtonRef}
           variant="secondary"
           size="sm"
           onClick={() => setDrawerOpen(true)}
