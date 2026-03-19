@@ -4,7 +4,7 @@ Philippine bar & club listings web app. Centralized directory for discovering ba
 
 ## Project Status
 
-**Phase:** Plan 5 — Data Seeding (complete, scripts ready — run with GOOGLE_PLACES_API_KEY)
+**Phase:** Plan 5 — Data Seeding (complete — 200 listings seeded)
 
 ## Key Documents
 
