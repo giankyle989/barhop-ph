@@ -13,7 +13,7 @@
 |---|---|---|---|---|
 | 1 | [Foundation](./2026-03-19-plan-1-foundation.md) | Phase 1 | None | Done |
 | 2 | [Admin CRUD & Image Upload](./2026-03-19-plan-2-admin-crud.md) | Phase 2 | Plan 1 | Done |
-| 3 | [Customer UI & Search](./2026-03-19-plan-3-customer-ui.md) | Phase 3 | Plan 2 | Pending |
+| 3 | [Customer UI & Search](./2026-03-19-plan-3-customer-ui.md) | Phase 3 | Plan 2 | Done |
 | 4 | [SEO & Performance](./2026-03-19-plan-4-seo-performance.md) | Phase 4 | Plan 3 | Pending |
 | 5 | [Data Seeding](./2026-03-19-plan-5-data-seeding.md) | Phase 5 | Plan 4 | Pending |
 | 6 | [Promoted Listings & Analytics](./2026-03-19-plan-6-promoted-analytics.md) | Phase 6-7 | Plan 5 | Pending |
