@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
@@ -17,6 +17,7 @@ export function SearchBar({
   placeholder = "Search bars and clubs...",
 }: SearchBarProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [value, setValue] = useState(defaultValue);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -36,7 +37,13 @@ export function SearchBar({
       }
       // Reset to first page when search changes
       params.delete("page");
-      router.push(`?${params.toString()}`, { scroll: false });
+
+      // Navigate to /listings if not already on the browse page
+      const isOnBrowse = pathname === "/listings";
+      const url = isOnBrowse
+        ? `?${params.toString()}`
+        : `/listings?${params.toString()}`;
+      router.push(url, { scroll: false });
 
       // Track search event if Umami is loaded
       if (query.trim() && typeof window !== "undefined" && window.umami) {
@@ -84,7 +91,7 @@ export function SearchBar({
         aria-hidden="true"
       />
       <Input
-        type="search"
+        type="text"
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
