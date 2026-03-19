@@ -1,0 +1,3 @@
+// Load .env.local into process.env.
+// Used via: DOTENV_CONFIG_PATH=.env.local npx tsx --require dotenv/config scripts/...
+// This file is kept as documentation — the actual loading happens via --require flag.

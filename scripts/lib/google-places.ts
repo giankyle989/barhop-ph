@@ -267,12 +267,9 @@ export async function downloadPlacePhoto(
 
   await throttle();
 
-  const url = new URL(`${PLACES_BASE}/photo/json`);
-  url.searchParams.set("photo_reference", photoReference);
-  url.searchParams.set("maxwidth", String(maxWidth));
-  url.searchParams.set("key", apiKey);
+  const url = `${PLACES_BASE}/photo?photo_reference=${encodeURIComponent(photoReference)}&maxwidth=${maxWidth}&key=${apiKey}`;
 
-  const res = await fetch(url.toString());
+  const res = await fetch(url);
   if (!res.ok) {
     throw new Error(
       `Failed to download place photo: ${res.status} ${res.statusText}`
