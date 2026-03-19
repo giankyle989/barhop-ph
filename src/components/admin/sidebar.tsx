@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { BarChart3 } from "lucide-react";
 
 interface SidebarProps {
   user: {
@@ -13,7 +14,8 @@ interface SidebarProps {
 
 interface NavItem {
   label: string;
-  icon: string;
+  /** Emoji string for internal links; React node for items needing SVG icons. */
+  icon: React.ReactNode;
   href: string;
   external?: boolean;
   superAdminOnly?: boolean;
@@ -23,7 +25,13 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Dashboard", icon: "📊", href: "/admin/dashboard" },
   { label: "Listings", icon: "📋", href: "/admin/listings" },
   { label: "Users", icon: "👥", href: "/admin/users", superAdminOnly: true },
-  { label: "Analytics", icon: "📈", href: "#", external: true },
+  {
+    label: "Analytics",
+    icon: <BarChart3 className="h-4 w-4 shrink-0" aria-hidden="true" />,
+    href: process.env.NEXT_PUBLIC_UMAMI_DASHBOARD_URL || "https://cloud.umami.is",
+    external: true,
+    superAdminOnly: true,
+  },
 ];
 
 /** Extracts up to two initials from a full name. */
