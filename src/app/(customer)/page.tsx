@@ -104,7 +104,7 @@ export default async function HomePage() {
 
           <div className="mt-8 mx-auto max-w-xl">
             <Suspense fallback={<div className="h-10 w-full rounded-md bg-surface-raised animate-pulse" />}>
-              <SearchBar placeholder="Search bars and clubs..." />
+              <SearchBar placeholder="Search bars and clubs..." mode="autocomplete" />
             </Suspense>
           </div>
         </div>

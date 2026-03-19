@@ -59,7 +59,7 @@ export default function NotFound() {
               <div className="h-10 w-full rounded-md bg-surface-raised animate-pulse" />
             }
           >
-            <SearchBar placeholder="Search bars and clubs..." />
+            <SearchBar placeholder="Search bars and clubs..." mode="autocomplete" />
           </Suspense>
         </div>
 
