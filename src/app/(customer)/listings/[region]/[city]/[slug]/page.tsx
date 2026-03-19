@@ -25,13 +25,10 @@ const ListingGallery = dynamic(
   { loading: () => <Skeleton className="h-[200px] w-full" /> }
 );
 
-// ListingMap: Google Maps iframe — skip SSR (no benefit, only client-side).
+// ListingMap: Google Maps iframe — lazy load with skeleton placeholder.
 const ListingMap = dynamic(
   () => import("@/components/customer/listing-map").then((m) => ({ default: m.ListingMap })),
-  {
-    loading: () => <Skeleton className="h-[300px] w-full" />,
-    ssr: false,
-  }
+  { loading: () => <Skeleton className="h-[300px] w-full" /> }
 );
 
 export const revalidate = 60;
