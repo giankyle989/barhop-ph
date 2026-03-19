@@ -4,7 +4,7 @@ Philippine bar & club listings web app. Centralized directory for discovering ba
 
 ## Project Status
 
-**Phase:** Plan 3 — Customer UI & Search (complete)
+**Phase:** Plan 4 — SEO & Performance (complete)
 
 ## Key Documents
 
