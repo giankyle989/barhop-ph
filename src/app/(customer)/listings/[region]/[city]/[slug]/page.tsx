@@ -272,6 +272,7 @@ export default async function ListingDetailPage({ params }: Props) {
                 Location
               </h2>
               <ListingMap
+                listingId={listing.id}
                 latitude={listing.latitude}
                 longitude={listing.longitude}
                 name={listing.name}

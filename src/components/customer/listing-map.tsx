@@ -3,6 +3,7 @@
 import { ExternalLink } from "lucide-react";
 
 interface ListingMapProps {
+  listingId: string;
   latitude: number;
   longitude: number;
   name: string;
@@ -10,8 +11,12 @@ interface ListingMapProps {
 
 const MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
-export function ListingMap({ latitude, longitude, name }: ListingMapProps) {
+export function ListingMap({ listingId, latitude, longitude, name }: ListingMapProps) {
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+
+  function trackDirections() {
+    window.umami?.track("get_directions", { listing_id: listingId });
+  }
 
   return (
     <div className="rounded-lg overflow-hidden border border-border">
@@ -35,6 +40,7 @@ export function ListingMap({ latitude, longitude, name }: ListingMapProps) {
             href={mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={trackDirections}
             className="inline-flex items-center gap-1.5 text-sm text-neon-purple hover:text-neon-purple/80 transition-colors font-medium"
           >
             <ExternalLink size={14} aria-hidden="true" />
@@ -50,6 +56,7 @@ export function ListingMap({ latitude, longitude, name }: ListingMapProps) {
             href={mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={trackDirections}
             className="inline-flex items-center gap-1.5 text-xs text-content-secondary hover:text-neon-purple transition-colors"
           >
             <ExternalLink size={12} aria-hidden="true" />

@@ -49,6 +49,7 @@ interface ListingContactProps {
 }
 
 export function ListingContact({
+  listingId,
   address,
   phone,
   whatsapp,
@@ -57,11 +58,16 @@ export function ListingContact({
 }: ListingContactProps) {
   const [copied, setCopied] = useState(false);
 
+  function trackContact(type: string) {
+    window.umami?.track("contact_click", { type, listing_id: listingId });
+  }
+
   const handleCopyAddress = async () => {
     try {
       await navigator.clipboard.writeText(address);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+      trackContact("copy_address");
     } catch {
       // Clipboard API may be blocked; silently fail
     }
@@ -103,6 +109,7 @@ export function ListingContact({
           <Phone size={16} className="flex-shrink-0 text-content-muted" aria-hidden="true" />
           <a
             href={`tel:${phone}`}
+            onClick={() => trackContact("phone")}
             className="text-sm text-content-secondary hover:text-neon-purple transition-colors"
           >
             {phone}
@@ -128,6 +135,7 @@ export function ListingContact({
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackContact("whatsapp")}
             className="text-sm text-content-secondary hover:text-neon-purple transition-colors"
           >
             WhatsApp
@@ -141,6 +149,7 @@ export function ListingContact({
           <Mail size={16} className="flex-shrink-0 text-content-muted" aria-hidden="true" />
           <a
             href={`mailto:${email}`}
+            onClick={() => trackContact("email")}
             className="text-sm text-content-secondary hover:text-neon-purple transition-colors break-all"
           >
             {email}
@@ -156,6 +165,7 @@ export function ListingContact({
               href={socialLinks.facebook}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackContact("social")}
               className="text-content-muted hover:text-neon-purple transition-colors"
               aria-label="Facebook page"
             >
@@ -167,6 +177,7 @@ export function ListingContact({
               href={socialLinks.instagram}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackContact("social")}
               className="text-content-muted hover:text-neon-pink transition-colors"
               aria-label="Instagram profile"
             >
@@ -178,6 +189,7 @@ export function ListingContact({
               href={socialLinks.tiktok}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackContact("social")}
               className="text-content-muted hover:text-content transition-colors"
               aria-label="TikTok profile"
             >
@@ -189,6 +201,7 @@ export function ListingContact({
               href={socialLinks.x}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackContact("social")}
               className="text-content-muted hover:text-content transition-colors"
               aria-label="X (Twitter) profile"
             >
