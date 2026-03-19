@@ -3,8 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { REGIONS, getRegionBySlug } from "@/lib/constants";
-import { listingToCardData } from "@/lib/listing-helpers";
+import { listingToCardData, type ListingCardData } from "@/lib/listing-helpers";
 import { ListingCard } from "@/components/customer/listing-card";
+import { SpotlightCard } from "@/components/customer/spotlight-card";
 import { Breadcrumbs } from "@/components/customer/breadcrumbs";
 import { Badge } from "@/components/ui";
 import { canonicalUrl } from "@/lib/seo";
@@ -45,14 +46,46 @@ export default async function RegionPage({ params }: Props) {
     notFound();
   }
 
-  const listings = await db.listing.findMany({
-    where: {
-      region: regionSlug,
-      status: "published",
-    },
-    orderBy: [{ isPromoted: "desc" }, { updatedAt: "desc" }],
-    take: LISTING_LIMIT + 1, // Fetch one extra to detect if there are more
-  });
+  // Fetch spotlight (promoted) listings and the main listing grid in parallel
+  const [spotlightRaw, listings] = await Promise.all([
+    db.listing.findMany({
+      where: { region: regionSlug, status: "published", isPromoted: true },
+      orderBy: { updatedAt: "desc" },
+      take: 2,
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        categories: true,
+        region: true,
+        city: true,
+        imageUrl: true,
+        isPromoted: true,
+        openHours: true,
+        tags: true,
+        description: true,
+      },
+    }),
+    db.listing.findMany({
+      where: { region: regionSlug, status: "published" },
+      orderBy: [{ isPromoted: "desc" }, { updatedAt: "desc" }],
+      take: LISTING_LIMIT + 1,
+    }),
+  ]);
+
+  const spotlightCards = spotlightRaw.map((l) => ({
+    id: l.id,
+    name: l.name,
+    slug: l.slug,
+    categories: l.categories,
+    region: l.region,
+    city: l.city,
+    imageUrl: l.imageUrl,
+    isPromoted: l.isPromoted,
+    openHours: l.openHours as ListingCardData["openHours"],
+    tags: l.tags,
+    description: l.description,
+  }));
 
   // Determine whether there are more results beyond the limit
   const hasMore = listings.length > LISTING_LIMIT;
@@ -100,6 +133,20 @@ export default async function RegionPage({ params }: Props) {
                   {city.name}
                 </Badge>
               </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Spotlight — promoted venues with description */}
+      {spotlightCards.length > 0 && (
+        <section aria-label="Featured venues" className="mb-10">
+          <h2 className="text-sm font-medium text-content-secondary uppercase tracking-wider mb-4">
+            Featured Venues
+          </h2>
+          <div className="flex flex-col gap-4">
+            {spotlightCards.map((listing) => (
+              <SpotlightCard key={listing.id} listing={listing} />
             ))}
           </div>
         </section>
