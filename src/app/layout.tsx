@@ -13,12 +13,20 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://barhop.ph"),
   title: {
     default: "BarHop PH — Discover Bars & Clubs in the Philippines",
     template: "%s | BarHop PH",
   },
   description:
     "The Philippines' #1 directory for bars, clubs, and nightlife venues. Find the best spots in Makati, BGC, Cebu, and more.",
+  openGraph: {
+    type: "website",
+    siteName: "BarHop PH",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({
