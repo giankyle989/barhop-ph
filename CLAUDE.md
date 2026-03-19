@@ -4,7 +4,7 @@ Philippine bar & club listings web app. Centralized directory for discovering ba
 
 ## Project Status
 
-**Phase:** Plan 6 — Promoted Listings & Analytics (complete)
+**Phase:** MVP Complete — All 7 plans done
 
 ## Key Documents
 
