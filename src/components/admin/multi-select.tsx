@@ -97,7 +97,6 @@ export function MultiSelect({ options, selected, onChange, label }: MultiSelectP
           aria-multiselectable="true"
           aria-labelledby={label ? labelId : undefined}
           className="absolute z-50 mt-1 w-full max-h-60 overflow-y-auto rounded bg-surface-card border border-border shadow-card py-1"
-          style={{ width: containerRef.current?.offsetWidth }}
         >
           {options.length === 0 && (
             <div className="px-3 py-2 text-sm text-content-muted">No options available</div>
